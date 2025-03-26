@@ -44,7 +44,7 @@ public class ExecuteScriptCommand extends Command {
                             String[] arguments = Arrays.copyOfRange(command_with_arguments, 1, command_with_arguments.length);
                             Command command = commandHandler.getCommand(command_with_arguments[0]);
 
-                            Response r = commandHandler.execute(command, new Request(arguments)); // TODO fix me
+                            Response r = commandHandler.execute(command, new Request(arguments));
                             System.out.println(r);
                         }
                     }
