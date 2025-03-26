@@ -23,7 +23,7 @@ public class Main {
 //        commandHandler.register("remove_by_id", new RemoveByIdCommand(collectionManager));
         commandHandler.register(new SaveCommand(collectionManager));
         commandHandler.register(new ExecuteScriptCommand(commandHandler));
-//        commandHandler.register("add_if_min", new AddIfMinCommand(collectionManager, inputHandler));
+        commandHandler.register(new AddIfMinCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_greater", new RemoveGreaterCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_lower", new RemoveLowerCommand(collectionManager, inputHandler));
 //        commandHandler.register("count_greater_than_type", new CountGreaterThanTypeCommand(collectionManager));
