@@ -98,14 +98,14 @@ public class CollectionManager {
     }
 
 //Команда инфы о коллекции
-//    public String getCollectionInfo() {
-//        return String.format(
-//                "Тип коллекции: %s\nДата инициализации: %s\nКоличество элементов: %d",
-//                collection.getClass().getName(),
-//                initializationDate,
-//                collection.size()
-//        );
-//    }
+    public String getCollectionInfo() {
+        return String.format(
+                "Тип коллекции: %s\nДата инициализации: %s\nКоличество элементов: %d",
+                collection.getClass().getName(),
+                initializationDate,
+                collection.size()
+        );
+    }
 
 //Команда замены тикета по айди
 //    public boolean updateElementById(Long id, Ticket updatedTicket) {

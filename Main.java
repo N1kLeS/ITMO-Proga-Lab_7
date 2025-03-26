@@ -1,7 +1,6 @@
 import controller.CommandHandler;
 import controller.ElementInputHandler;
 import controller.commands.*;
-import models.Ticket;
 import service.*;
 import ui.*;
 
@@ -18,7 +17,7 @@ public class Main {
 
         commandHandler.register(new ExitCommand());
         commandHandler.register(new AddCommand(collectionManager, inputHandler));
-//        commandHandler.register("info", new InfoCommand(collectionManager));
+        commandHandler.register(new InfoCommand(collectionManager));
         commandHandler.register(new ShowCommand(collectionManager));
 //        commandHandler.register("update", new UpdateCommand(collectionManager, inputHandler));
         commandHandler.register(new ClearCommand(collectionManager));
