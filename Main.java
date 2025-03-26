@@ -28,7 +28,7 @@ public class Main {
 //        commandHandler.register("remove_lower", new RemoveLowerCommand(collectionManager, inputHandler));
         commandHandler.register(new CountGreaterThanTypeCommand(collectionManager));
         commandHandler.register(new FilterByRefundableCommand(collectionManager));
-//        commandHandler.register("filter_greater_than_person", new FilterGreaterThanPersonCommand(collectionManager));
+        commandHandler.register(new FilterGreaterThanPersonCommand(collectionManager));
         commandHandler.register(new HelpCommand(commandHandler));
 
         ConsoleUI consoleUI = new ConsoleUI(commandHandler);
