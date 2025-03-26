@@ -8,7 +8,7 @@ import ui.*;
 public class Main {
     public static void main(String[] args) {
         CollectionManager collectionManager = new CollectionManager();
-
+        collectionManager.loadCollection("collection.csv");
         CommandHandler commandHandler = new CommandHandler();
         ElementInputHandler inputHandler = new ElementInputHandler();
 
@@ -18,7 +18,7 @@ public class Main {
         commandHandler.register(new AddCommand(collectionManager, inputHandler));
         commandHandler.register(new InfoCommand(collectionManager));
         commandHandler.register(new ShowCommand(collectionManager));
-//        commandHandler.register("update", new UpdateCommand(collectionManager, inputHandler));
+        commandHandler.register(new UpdateCommand(collectionManager, inputHandler));
         commandHandler.register(new ClearCommand(collectionManager));
 //        commandHandler.register("remove_by_id", new RemoveByIdCommand(collectionManager));
         commandHandler.register(new SaveCommand(collectionManager));
