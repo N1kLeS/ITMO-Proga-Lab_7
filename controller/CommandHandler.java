@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
-    private static final Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
 
     public void register(Command command) {
-        commands.put(Command.getName(), command);
+        commands.put(command.getName(), command);
     }
 
     public Response execute(Command command, Request request) {
@@ -35,14 +35,15 @@ public class CommandHandler {
     }
 
     // Вывод всех зарегистрированных команд с их описаниями
-    public static String getCommands() {
+    public String getCommands() {
+        StringBuilder builder = new StringBuilder();
         for (Command command : commands.values()) {
-            return command.getName() + ": " + command.getInfo();
+            builder.append(command.getName() + ": " + command.getInfo() + "\n");
         }
-        return "";
+        return builder.toString();
     }
 
-    public static Command getCommand(String commandName) {
+    public  Command getCommand(String commandName) {
         return commands.get(commandName);
     }
 }

@@ -7,7 +7,7 @@ import ui.Response;
 
 
 public abstract class Command {
-    private static String name;
+    private String name;
     private final String info;
     private final int argumentCount;
     private final CommandType commandType;
@@ -19,7 +19,7 @@ public abstract class Command {
         this.commandType = commandType;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 

@@ -128,10 +128,10 @@ public class CollectionManager {
     }
 
 //Отчистка
-//    public void clearCollection() {
-//        collection.clear();
-//    }
-//
+    public void clearCollection() {
+        collection.clear();
+    }
+
 ////Удаление по id
 //    public boolean removeById(Long id) {
 //        Optional<Ticket> ticketToRemove = collection.stream()

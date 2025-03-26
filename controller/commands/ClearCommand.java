@@ -1,27 +1,21 @@
-//package controller.commands;
-//
-//import controller.Command;
-//import service.CollectionManager;
-//
-//public class ClearCommand implements Command {
-//    private final CollectionManager collectionManager;
-//
-//    public ClearCommand(CollectionManager collectionManager) {
-//        this.collectionManager = collectionManager;
-//    }
-//
-//    @Override
-//    public void execute(String[] args) {
-//        if (args.length != 0) {
-//            System.out.println("Ошибка: эта команда не принимает аргументы.");
-//            return;
-//        }
-//        collectionManager.clearCollection();
-//        System.out.println("Коллекция успешно очищена.");
-//    }
-//
-//    @Override
-//    public String describe() {
-//        return "clear - отчистка коллекции";
-//    }
-//}
+package controller.commands;
+
+import controller.CommandType;
+import service.CollectionManager;
+import ui.Request;
+import ui.Response;
+
+public class ClearCommand extends Command {
+    private CollectionManager collectionManager;
+
+    public ClearCommand(CollectionManager collectionManager) {
+        super("clear", "команда очистки коллекции.", 0, CommandType.WITHOUT_ARGUMENTS);
+        this.collectionManager = collectionManager;
+    }
+
+    @Override
+    public Response execute(Request request) {
+        collectionManager.clearCollection();
+        return new Response(true, "Коллекция успешно очищена.", null);
+    }
+}
