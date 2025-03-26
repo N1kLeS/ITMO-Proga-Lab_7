@@ -132,20 +132,20 @@ public class CollectionManager {
         collection.clear();
     }
 
-////Удаление по id
-//    public boolean removeById(Long id) {
-//        Optional<Ticket> ticketToRemove = collection.stream()
-//                .filter(ticket -> ticket.getId().equals(id))
-//                .findFirst();
-//
-//        if (ticketToRemove.isPresent()) {
-//            collection.remove(ticketToRemove.get());
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
+//Удаление по id
+    public boolean removeById(Long id) {
+        Optional<Ticket> ticketToRemove = collection.stream()
+                .filter(ticket -> ticket.getId().equals(id))
+                .findFirst();
+
+        if (ticketToRemove.isPresent()) {
+            collection.remove(ticketToRemove.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 //Сохранение в форм. csv
     public boolean saveCollection() {
         try (PrintWriter writer = new PrintWriter(file)) {

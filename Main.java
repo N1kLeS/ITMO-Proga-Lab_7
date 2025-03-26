@@ -20,7 +20,7 @@ public class Main {
         commandHandler.register(new ShowCommand(collectionManager));
         commandHandler.register(new UpdateCommand(collectionManager, inputHandler));
         commandHandler.register(new ClearCommand(collectionManager));
-//        commandHandler.register("remove_by_id", new RemoveByIdCommand(collectionManager));
+        commandHandler.register(new RemoveByIdCommand(collectionManager));
         commandHandler.register(new SaveCommand(collectionManager));
         commandHandler.register(new ExecuteScriptCommand(commandHandler));
         commandHandler.register(new AddIfMinCommand(collectionManager, inputHandler));
