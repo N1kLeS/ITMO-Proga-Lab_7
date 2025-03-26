@@ -11,8 +11,7 @@ public class Main {
 
         CommandHandler commandHandler = new CommandHandler();
         ElementInputHandler inputHandler = new ElementInputHandler();
-//        String fileName = "collection.csv";
-//        collectionManager.loadCollection(fileName);
+
 
 
         commandHandler.register(new ExitCommand());
@@ -22,7 +21,7 @@ public class Main {
 //        commandHandler.register("update", new UpdateCommand(collectionManager, inputHandler));
         commandHandler.register(new ClearCommand(collectionManager));
 //        commandHandler.register("remove_by_id", new RemoveByIdCommand(collectionManager));
-//        commandHandler.register("save", new SaveCommand(collectionManager));
+        commandHandler.register(new SaveCommand(collectionManager));
         commandHandler.register(new ExecuteScriptCommand(commandHandler));
 //        commandHandler.register("add_if_min", new AddIfMinCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_greater", new RemoveGreaterCommand(collectionManager, inputHandler));

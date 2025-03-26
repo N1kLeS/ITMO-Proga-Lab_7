@@ -15,12 +15,12 @@ import java.util.Set;
 public class CollectionManager {
     private final HashSet<Ticket> collection;
     private final ZonedDateTime initializationDate;
-//    private final String file;
+    private final String file;
 
     public CollectionManager() {
         this.collection = new HashSet<>();
         this.initializationDate = ZonedDateTime.now();
-//        this.file = "collection.csv";
+        this.file = "collection.csv";
     }
 
     public Set<Ticket> getCollection() {
@@ -146,16 +146,16 @@ public class CollectionManager {
 //        }
 //    }
 //
-////Сохранение в форм. csv
-//    public boolean saveCollection() {
-//        try (PrintWriter writer = new PrintWriter(file)) {
-//            for (Ticket ticket : collection) {
-//                writer.println(ticket.toCsvString());
-//            }
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println("Ошибка при сохранении коллекции: " + e.getMessage());
-//            return false;
-//        }
-//    }
+//Сохранение в форм. csv
+    public boolean saveCollection() {
+        try (PrintWriter writer = new PrintWriter(file)) {
+            for (Ticket ticket : collection) {
+                writer.println(ticket.toCsvString());
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println("Ошибка при сохранении коллекции: " + e.getMessage());
+            return false;
+        }
+    }
 }
