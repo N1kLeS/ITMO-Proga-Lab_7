@@ -7,8 +7,6 @@ import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
-
-
 public class FilterGreaterThanPersonCommand extends Command {
     private final CollectionManager collectionManager;
 

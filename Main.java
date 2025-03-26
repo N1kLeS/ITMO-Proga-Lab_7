@@ -12,8 +12,6 @@ public class Main {
         CommandHandler commandHandler = new CommandHandler();
         ElementInputHandler inputHandler = new ElementInputHandler();
 
-
-
         commandHandler.register(new ExitCommand());
         commandHandler.register(new AddCommand(collectionManager, inputHandler));
         commandHandler.register(new InfoCommand(collectionManager));
@@ -25,7 +23,7 @@ public class Main {
         commandHandler.register(new ExecuteScriptCommand(commandHandler));
         commandHandler.register(new AddIfMinCommand(collectionManager, inputHandler));
         commandHandler.register(new RemoveGreaterCommand(collectionManager, inputHandler));
-//        commandHandler.register("remove_lower", new RemoveLowerCommand(collectionManager, inputHandler));
+        commandHandler.register(new RemoveLowerCommand(collectionManager, inputHandler));
         commandHandler.register(new CountGreaterThanTypeCommand(collectionManager));
         commandHandler.register(new FilterByRefundableCommand(collectionManager));
         commandHandler.register(new FilterGreaterThanPersonCommand(collectionManager));

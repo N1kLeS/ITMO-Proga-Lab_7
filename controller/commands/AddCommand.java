@@ -7,7 +7,6 @@ import controller.ElementInputHandler;
 import ui.Request;
 import ui.Response;
 
-
 public class AddCommand extends Command {
     ElementInputHandler inputHandler;
     CollectionManager collectionManager;
@@ -26,8 +25,6 @@ public class AddCommand extends Command {
             Ticket ticket = inputHandler.createTicket();
             collectionManager.add(ticket);
         }
-
-
 
         return new Response(true, "Элемент успешно добавлен!", null);
     }

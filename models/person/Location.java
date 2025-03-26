@@ -1,7 +1,5 @@
 package models.person;
 
-
-
 public class Location {
     private Integer x; //Поле не может быть null
     private Integer y; //Поле не может быть null

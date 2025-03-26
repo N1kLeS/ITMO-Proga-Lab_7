@@ -1,7 +1,6 @@
 package controller.commands;
 
 import controller.*;
-import service.CollectionManager;
 import ui.*;
 
 public class ExitCommand extends Command {

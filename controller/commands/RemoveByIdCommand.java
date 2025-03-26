@@ -5,7 +5,6 @@ import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
-
 public class RemoveByIdCommand extends Command {
     private final CollectionManager collectionManager;
 

@@ -1,12 +1,8 @@
 package controller.commands;
 
 import controller.*;
-import service.CollectionManager;
 import ui.Request;
 import ui.Response;
-
-
-
 
 public class HelpCommand extends Command {
     CommandHandler commandHandler;
@@ -14,8 +10,6 @@ public class HelpCommand extends Command {
         super("help", "выводит информацию о всех доступных командах", 0, CommandType.WITHOUT_ARGUMENTS);
         this.commandHandler = commandHandler;
     }
-
-
 
     @Override
     public Response execute(Request request) {
@@ -26,8 +20,6 @@ public class HelpCommand extends Command {
         if (commandsInfo.isEmpty()) {
             return Response.failure("Нет доступных команд.");
         }
-
-
 
         helpMessage.append(commandsInfo);
         return new Response(true, helpMessage.toString(), null);

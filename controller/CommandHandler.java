@@ -34,7 +34,6 @@ public class CommandHandler {
         return new Response(false, "Неверное количество аргументов для команды: " + command.getName(), null);
     }
 
-    // Вывод всех зарегистрированных команд с их описаниями
     public String getCommands() {
         StringBuilder builder = new StringBuilder();
         for (Command command : commands.values()) {

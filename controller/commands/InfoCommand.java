@@ -1,7 +1,5 @@
 package controller.commands;
 
-
-
 import controller.CommandType;
 import service.CollectionManager;
 import ui.Request;
