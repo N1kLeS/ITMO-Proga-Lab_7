@@ -24,7 +24,7 @@ public class Main {
         commandHandler.register(new SaveCommand(collectionManager));
         commandHandler.register(new ExecuteScriptCommand(commandHandler));
         commandHandler.register(new AddIfMinCommand(collectionManager, inputHandler));
-//        commandHandler.register("remove_greater", new RemoveGreaterCommand(collectionManager, inputHandler));
+        commandHandler.register(new RemoveGreaterCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_lower", new RemoveLowerCommand(collectionManager, inputHandler));
         commandHandler.register(new CountGreaterThanTypeCommand(collectionManager));
         commandHandler.register(new FilterByRefundableCommand(collectionManager));

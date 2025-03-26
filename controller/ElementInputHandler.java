@@ -6,7 +6,6 @@ import models.person.*;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 public class ElementInputHandler {
     private final Scanner scanner = new Scanner(System.in);

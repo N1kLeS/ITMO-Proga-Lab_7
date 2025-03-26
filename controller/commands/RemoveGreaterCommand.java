@@ -1,38 +1,31 @@
-//package controller.commands;
-//
-//import controller.Command;
-//import controller.ElementInputHandler;
-//import models.Ticket;
-//import service.CollectionManager;
-//
-//public class RemoveGreaterCommand implements Command {
-//    private final CollectionManager collectionManager;
-//    private final ElementInputHandler inputHandler;
-//
-//    public RemoveGreaterCommand(CollectionManager collectionManager, ElementInputHandler inputHandler) {
-//        this.collectionManager = collectionManager;
-//        this.inputHandler = inputHandler;
-//    }
-//
-//    @Override
-//    public void execute(String[] args) {
-//        if (args.length > 0) {
-//            System.out.println("Команда remove_greater не принимает аргументы.");
-//            return;
-//        }
-//
-//        System.out.println("Введите данные для элемента:");
-//        Ticket ticket = inputHandler.readElement();
-//
-//        int initialSize = collectionManager.getCollection().size();
-//        collectionManager.getCollection().removeIf(existingTicket -> existingTicket.compareTo(ticket) > 0);
-//        int removedCount = initialSize - collectionManager.getCollection().size();
-//
-//        System.out.println("Удалено элементов: " + removedCount);
-//    }
-//
-//    @Override
-//    public String describe() {
-//        return "remove_greater -  удаляет из коллекции все элементы, превышающие заданный";
-//    }
-//}
+package controller.commands;
+
+import controller.CommandType;
+import controller.ElementInputHandler;
+import models.Ticket;
+import service.CollectionManager;
+import ui.Request;
+import ui.Response;
+
+public class RemoveGreaterCommand extends Command {
+    private final CollectionManager collectionManager;
+    private final ElementInputHandler inputHandler;
+
+    public RemoveGreaterCommand(CollectionManager collectionManager, ElementInputHandler inputHandler) {
+        super("remove_greater", "удаляет из коллекции все элементы, превышающие заданный", 0, CommandType.WITHOUT_ARGUMENTS);
+        this.collectionManager = collectionManager;
+        this.inputHandler = inputHandler;
+    }
+
+    @Override
+    public Response execute(Request request) {
+        System.out.println("Введите данные для элемента:");
+        Ticket ticket = inputHandler.readElement();
+
+        int initialSize = collectionManager.getCollection().size();
+        collectionManager.getCollection().removeIf(existingTicket -> existingTicket.compareTo(ticket) > 0);
+        int removedCount = initialSize - collectionManager.getCollection().size();
+
+        return new Response(true, "Удалено элементов: " + removedCount);
+    }
+}
