@@ -1,7 +1,7 @@
 package models;
 
 public enum TicketType {
-    USUAL,
+    CHEAP,
     BUDGETARY,
-    CHEAP;
+    USUAL;
 }
