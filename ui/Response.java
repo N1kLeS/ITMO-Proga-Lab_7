@@ -42,9 +42,9 @@ public class Response {
     @Override
     public String toString() {
         if (success) {
-            return "Успех: " + message + "\n";
+            return "Успех: " + message;
         } else {
-            return "Ошибка: " + message + "\n";
+            return "Ошибка: " + message;
         }
     }
 }

@@ -24,7 +24,7 @@ public class Main {
         commandHandler.register(new ClearCommand(collectionManager));
 //        commandHandler.register("remove_by_id", new RemoveByIdCommand(collectionManager));
 //        commandHandler.register("save", new SaveCommand(collectionManager));
-//        commandHandler.register("execute_script", new ExecuteScriptCommand(commandHandler));
+        commandHandler.register(new ExecuteScriptCommand(commandHandler));
 //        commandHandler.register("add_if_min", new AddIfMinCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_greater", new RemoveGreaterCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_lower", new RemoveLowerCommand(collectionManager, inputHandler));
