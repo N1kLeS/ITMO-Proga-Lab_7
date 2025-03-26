@@ -23,8 +23,7 @@ public class RemoveByIdCommand extends Command {
                 return new Response(false, "Элемент с id " + id + " не найден.");
             }
         } catch (NumberFormatException e) {
-            System.out.println("Ошибка: id должен быть числом.");
+            return new Response(false, "Ошибка: id должен быть числом.");
         }
-        return new Response(true, "", null);
     }
 }

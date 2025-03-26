@@ -21,10 +21,9 @@ public class CountGreaterThanTypeCommand extends Command {
 
             long count = collectionManager.getCollection().stream().filter(ticket -> ticket.getType() != null && ticket.getType().compareTo(type) > 0).count();
 
-            System.out.println("Количество элементов, значение поля type которых больше " + type + ": " + count);
+            return new Response(true, "Количество элементов, значение поля type которых больше " + type + ": " + count);
         } catch (IllegalArgumentException e) {
-            System.out.println("Неверное значение типа. Доступные значения: USUAL, BUDGETARY, CHEAP.");
+            return new Response(false, "Неверное значение типа. Доступные значения: USUAL, BUDGETARY, CHEAP.");
         }
-        return new Response(true, "", null);
     }
 }
