@@ -27,7 +27,7 @@ public class Main {
 //        commandHandler.register("remove_greater", new RemoveGreaterCommand(collectionManager, inputHandler));
 //        commandHandler.register("remove_lower", new RemoveLowerCommand(collectionManager, inputHandler));
         commandHandler.register(new CountGreaterThanTypeCommand(collectionManager));
-//        commandHandler.register("filter_by_refundable", new FilterByRefundableCommand(collectionManager));
+        commandHandler.register(new FilterByRefundableCommand(collectionManager));
 //        commandHandler.register("filter_greater_than_person", new FilterGreaterThanPersonCommand(collectionManager));
         commandHandler.register(new HelpCommand(commandHandler));
 
