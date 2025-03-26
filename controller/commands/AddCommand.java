@@ -9,13 +9,17 @@ import ui.Response;
 
 
 public class AddCommand extends Command {
-    ElementInputHandler inputHandler = new ElementInputHandler();
+    ElementInputHandler inputHandler;
+    CollectionManager collectionManager;
+
     public AddCommand(CollectionManager collectionManager, ElementInputHandler inputHandler) {
         super("add", "добавляет новый элемент в коллекцию", 0, CommandType.WITHOUT_ARGUMENTS);
+        this.collectionManager = collectionManager;
+        this.inputHandler = inputHandler;
     }
 
     @Override
-    public Response execute(Request request, CollectionManager collectionManager) {
+    public Response execute(Request request) {
         if (collectionManager != null) {
             System.out.println("Добавление нового элемента в коллекцию...");
 

@@ -15,7 +15,7 @@ public class ShowCommand extends Command {
     }
 
     @Override
-    public Response execute(Request request, CollectionManager collectionManager) {
+    public Response execute(Request request) {
 //        return new Response(true, "Элементы коллекции:\n" + collectionManager.getAllElements(), null);
         String elements = collectionManager.getAllElements();
 

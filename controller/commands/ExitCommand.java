@@ -11,7 +11,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public Response execute(Request request, CollectionManager collectionManager) {
+    public Response execute(Request request) {
         System.out.println("Завершение работы программы...");
         System.exit(0);
         return new Response(true, "Программа завершена.", null);

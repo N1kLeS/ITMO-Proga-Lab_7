@@ -16,7 +16,7 @@ public class HelpCommand extends Command {
 
 
     @Override
-    public Response execute(Request request, CollectionManager collectionManager) {
+    public Response execute(Request request) {
         if (request.getCommandArgs().length != getArgumentCount()) {
             return Response.failure("Команда 'help' не принимает аргументов. Попробуйте просто ввести 'help'.");
         }

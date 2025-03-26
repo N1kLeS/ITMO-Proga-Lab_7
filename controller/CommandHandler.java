@@ -27,7 +27,7 @@ public class CommandHandler {
         }
 
         if (commandType.getArgs() == args.length || commandType.getArgs() == -1) {
-            return command.execute(request, null);
+            return command.execute(request);
         }
 
 

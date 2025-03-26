@@ -6,7 +6,7 @@ import ui.Request;
 import ui.Response;
 
 
-public abstract class Command implements controller.Command {
+public abstract class Command {
     private static String name;
     private final String info;
     private final int argumentCount;
@@ -39,5 +39,5 @@ public abstract class Command implements controller.Command {
         return commandType.isNeedForm();
     }
 
-    public abstract Response execute(Request request, CollectionManager collectionManager);
+    public abstract Response execute(Request request);
 }

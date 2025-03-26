@@ -92,6 +92,7 @@ public class CollectionManager {
         StringBuilder elements = new StringBuilder();
         for (Ticket ticket : collection) {
             elements.append(ticket.toString()).append("\n");
+
         }
         return elements.toString();
     }
