@@ -31,6 +31,7 @@ public class Main {
 //        commandHandler.register("filter_by_refundable", new FilterByRefundableCommand(collectionManager));
 //        commandHandler.register("filter_greater_than_person", new FilterGreaterThanPersonCommand(collectionManager));
         commandHandler.register(new HelpCommand(commandHandler));
+
         ConsoleUI consoleUI = new ConsoleUI(commandHandler);
         consoleUI.startInteractiveMode();
     }
