@@ -162,6 +162,5 @@ public class ElementInputHandler {
         Person person = createPerson();
         return person;
     }
-
 }
 

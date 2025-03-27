@@ -30,7 +30,6 @@ public class CommandHandler {
             return command.execute(request);
         }
 
-
         return new Response(false, "Неверное количество аргументов для команды: " + command.getName(), null);
     }
 

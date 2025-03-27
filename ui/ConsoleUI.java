@@ -15,6 +15,7 @@ public class ConsoleUI {
     public void startInteractiveMode() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Добро пожаловать! Введите 'help' для списка команд.");
+
         try {
             while (true) {
                 System.out.print("> ");
@@ -27,7 +28,6 @@ public class ConsoleUI {
 
                 try {
                     Command command = commandHandler.getCommand(commandName);
-
 
                     if (command != null) {
                         Request request = new Request(args);
@@ -45,7 +45,6 @@ public class ConsoleUI {
                 } catch (Exception e) {
                     System.out.println("Ошибка: " + e.getMessage());
                 }
-
             }
         } catch (Exception e) {
             System.out.println("Работа завершена!");

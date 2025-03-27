@@ -8,7 +8,6 @@ import ui.Response;
 public class ShowCommand extends Command {
     private CollectionManager collectionManager;
 
-
     public ShowCommand(CollectionManager collectionManager) {
         super("show", "вывести все существующие тикеты", 0, CommandType.WITHOUT_ARGUMENTS);
         this.collectionManager = collectionManager;

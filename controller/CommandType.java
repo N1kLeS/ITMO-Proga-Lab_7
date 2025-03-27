@@ -9,7 +9,6 @@ public enum CommandType implements Serializable {
     WITH_MANY_ARGUMENTS_FORM(-1, true),
     WITH_ARGUMENTS_FORM(1, true);
 
-
     private final int argumentCount;
     private final boolean needForm;
 

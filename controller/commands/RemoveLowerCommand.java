@@ -1,13 +1,11 @@
 package controller.commands;
 
-
 import controller.CommandType;
 import controller.ElementInputHandler;
 import models.Ticket;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
-
 
 public class RemoveLowerCommand extends Command {
     private final CollectionManager collectionManager;

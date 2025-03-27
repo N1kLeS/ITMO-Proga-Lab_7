@@ -14,7 +14,6 @@ public class Ticket {
     private TicketType type; //Поле может быть null
     private Person person; //Поле не может быть null
 
-
     public Ticket(Long id, String name, Coordinates coordinates, ZonedDateTime creationDate, int price, Boolean refundable, TicketType type, Person person) {
         this.id = id;
         this.name = name;

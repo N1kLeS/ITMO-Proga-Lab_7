@@ -7,7 +7,6 @@ import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
-
 public class UpdateCommand extends Command {
     private final CollectionManager collectionManager;
     private final ElementInputHandler inputHandler;

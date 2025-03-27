@@ -16,7 +16,6 @@ public class Person implements Comparable<Person> {
         this.location = location;
     }
 
-
     public String toCsvString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String birthdayStr = (birthday != null) ? dateFormat.format(birthday) : "";

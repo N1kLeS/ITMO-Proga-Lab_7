@@ -29,7 +29,7 @@ public class ExecuteScriptCommand extends Command {
 
 
         if (scriptExecutionCount.get(fileName) > 5) {
-            scriptExecutionCount.put(fileName, scriptExecutionCount.get(fileName) - 1); // Откатываем счетчик
+            scriptExecutionCount.put(fileName, scriptExecutionCount.get(fileName) - 1);
             return new Response(false, "Обнаружена рекурсия! Скрипт " + fileName + " вызван более 5 раз.", null);
         } else {
                 try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
