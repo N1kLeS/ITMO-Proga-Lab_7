@@ -44,4 +44,18 @@ public class CommandHandler {
     public  Command getCommand(String commandName) {
         return commands.get(commandName);
     }
+
+    public Response executeCommand(String commandName, Request request) {
+        try {
+            Command command = commands.get(commandName.toLowerCase());
+
+            if (command == null) {
+                return Response.failure("Неизвестная команда. Введите 'help' для списка доступных команд.");
+            }
+
+            return command.execute(request);
+        } catch (Exception e) {
+            return Response.failure("Ошибка при выполнении команды: " + e.getMessage());
+        }
+    }
 }

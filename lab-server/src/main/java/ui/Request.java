@@ -1,10 +1,18 @@
 package ui;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable {
+    private final String commandName;
     private final String[] commandArgs;
 
-    public Request(String[] commandArgs) {
+    public Request(String commandName, String[] commandArgs) {
+        this.commandName = commandName;
         this.commandArgs = commandArgs;
+    }
+
+    public String getCommandName() {
+        return commandName;
     }
 
     public String[] getCommandArgs() {
