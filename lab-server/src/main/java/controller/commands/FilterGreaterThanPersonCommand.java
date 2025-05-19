@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import controller.ElementInputHandler;
 import models.person.Person;
 import service.CollectionManager;
@@ -24,16 +25,16 @@ public class FilterGreaterThanPersonCommand extends Command {
             var filteredTickets = collectionManager.getCollection().stream().filter(ticket -> ticket.getPerson() != null && ticket.getPerson().compareTo(inputPerson) > 0).toList();
 
             if (filteredTickets.isEmpty()) {
-                return new Response(false, "Нет элементов, у которых поле person больше указанного.");
+                return Response.warning("Нет элементов, у которых поле person больше указанного.");
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("Элементы, у которых поле person больше указанного:\n");
                 filteredTickets.forEach(ticket -> stringBuilder.append(ticket).append("\n"));
 
-                return new Response(true, stringBuilder.toString(), null);
+                return Response.success(stringBuilder.toString(), null);
             }
         } catch (Exception e) {
-            return new Response(false, "Ошибка при вводе объекта person: " + e.getMessage(), null);
+            return Response.error("Ошибка при вводе объекта person: " + e.getMessage(), null);
         }
     }
 }

@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import controller.ElementInputHandler;
 import models.Ticket;
 import service.CollectionManager;
@@ -8,6 +9,9 @@ import ui.Request;
 import ui.Response;
 
 import java.util.Optional;
+
+import static ui.Response.error;
+import static ui.Response.success;
 
 public class AddIfMinCommand extends Command {
     private final CollectionManager collectionManager;
@@ -27,9 +31,9 @@ public class AddIfMinCommand extends Command {
 
         if (minTicket.isEmpty() || newTicket.compareTo(minTicket.get()) < 0) {
             collectionManager.add(newTicket);
-            return new Response(true, "Элемент успешно добавлен в коллекцию.");
+            return success( "Элемент успешно добавлен в коллекцию.");
         } else {
-            return new Response(false, "Элемент не был добавлен, так как он больше или равен минимальному элементу.");
+            return error("Элемент не был добавлен, так как он больше или равен минимальному элементу.");
         }
     }
 }

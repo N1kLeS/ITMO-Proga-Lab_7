@@ -1,7 +1,10 @@
 package service;
 
-import models.*;
-import models.person.*;
+import models.Coordinates;
+import models.Ticket;
+import models.TicketType;
+import models.person.Location;
+import models.person.Person;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,10 +20,11 @@ public class CollectionManager {
     private final ZonedDateTime initializationDate;
     private final String file;
 
-    public CollectionManager() {
+    public CollectionManager(String file) {
         this.collection = new HashSet<>();
         this.initializationDate = ZonedDateTime.now();
-        this.file = "collection.csv";
+        this.file = file;
+        loadCollection(file);
     }
 
     public Set<Ticket> getCollection() {

@@ -1,6 +1,9 @@
 package controller;
 
-import controller.commands.Command;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ui.Command;
+import ui.CommandType;
 import ui.Request;
 import ui.Response;
 
@@ -8,11 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
+    private static final Logger logger = LogManager.getLogger(CommandHandler.class);
     private final Map<String, Command> commands = new HashMap<>();
 
 
     public void register(Command command) {
         commands.put(command.getName(), command);
+        logger.debug("Registered command: {}", command.getName());
     }
 
     public Response execute(Command command, Request request) {
@@ -23,14 +28,14 @@ public class CommandHandler {
             if (args.length == 0) {
                 return command.execute(request);
             }
-            return new Response(false, "Команда не принимает аргументы.", null);
+            return Response.warning("Команда не принимает аргументы.");
         }
 
         if (commandType.getArgs() == args.length || commandType.getArgs() == -1) {
             return command.execute(request);
         }
 
-        return new Response(false, "Неверное количество аргументов для команды: " + command.getName(), null);
+        return Response.warning("Неверное количество аргументов для команды: " + command.getName());
     }
 
     public String getCommands() {
@@ -50,12 +55,16 @@ public class CommandHandler {
             Command command = commands.get(commandName.toLowerCase());
 
             if (command == null) {
-                return Response.failure("Неизвестная команда. Введите 'help' для списка доступных команд.");
+                return Response.warning("Неизвестная команда. Введите 'help' для списка доступных команд.");
             }
 
             return command.execute(request);
         } catch (Exception e) {
-            return Response.failure("Ошибка при выполнении команды: " + e.getMessage());
+            return Response.error("Ошибка при выполнении команды: " + e.getMessage());
         }
+    }
+
+    public boolean hasCommand(String commandName) {
+        return commands.containsKey(commandName.toLowerCase());
     }
 }

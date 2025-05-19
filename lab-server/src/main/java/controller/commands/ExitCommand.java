@@ -1,8 +1,10 @@
 package controller.commands;
 
-import controller.*;
+import ui.Command;
+import ui.CommandType;
+import ui.Request;
+import ui.Response;
 import service.CollectionManager;
-import ui.*;
 
 public class ExitCommand extends Command {
     private final CollectionManager collectionManager;
@@ -13,10 +15,9 @@ public class ExitCommand extends Command {
 
     @Override
     public Response execute(Request request) {
-        collectionManager.saveCollection();
         System.out.println("Завершение работы программы...");
         System.exit(0);
-        return new Response(true, "Программа завершена.", null);
+        return Response.success("Программа завершена.", null);
     }
 }
 

@@ -1,8 +1,9 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import controller.ElementInputHandler;
-import models.*;
+import models.Ticket;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
@@ -25,12 +26,12 @@ public class UpdateCommand extends Command {
             Ticket updatedTicket = inputHandler.createTicket();
 
             if (collectionManager.updateElementById(id, updatedTicket)) {
-                return new Response(true, "Элемент с id " + id + " успешно обновлён.");
+                return Response.success("Элемент с id " + id + " успешно обновлён.");
             } else {
-                return new Response(false, "Элемент с id " + id + " не найден.");
+                return Response.warning("Элемент с id " + id + " не найден.");
             }
         } catch (NumberFormatException e) {
-            return new Response(false, "Ошибка: id должен быть числом.");
+            return Response.error("Ошибка: id должен быть числом.");
         }
     }
 }

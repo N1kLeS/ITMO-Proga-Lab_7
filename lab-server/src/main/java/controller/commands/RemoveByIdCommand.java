@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
@@ -18,12 +19,12 @@ public class RemoveByIdCommand extends Command {
         try {
             Long id = Long.parseLong(request.getArgument(0));
             if (collectionManager.removeById(id)) {
-                return new Response(true, "Элемент с id " + id + " успешно удалён.");
+                return Response.success("Элемент с id " + id + " успешно удалён.");
             } else {
-                return new Response(false, "Элемент с id " + id + " не найден.");
+                return Response.warning("Элемент с id " + id + " не найден.");
             }
         } catch (NumberFormatException e) {
-            return new Response(false, "Ошибка: id должен быть числом.");
+            return Response.error( "Ошибка: id должен быть числом.");
         }
     }
 }

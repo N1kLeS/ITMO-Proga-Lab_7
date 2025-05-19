@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
@@ -15,6 +16,6 @@ public class InfoCommand extends Command {
 
     @Override
     public Response execute(Request request) {
-        return new Response(true,"Информация о коллекции: \n" + collectionManager.getCollectionInfo(), null);
+        return Response.success("Информация о коллекции: \n" + collectionManager.getCollectionInfo(), null);
     }
 }

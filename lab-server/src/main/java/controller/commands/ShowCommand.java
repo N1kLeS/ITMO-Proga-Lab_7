@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
@@ -18,9 +19,9 @@ public class ShowCommand extends Command {
         String elements = collectionManager.getAllElements();
 
         if (elements == null || elements.isEmpty()) {
-            return Response.failure("Коллекция пуста.");
+            return Response.warning("Коллекция пуста.");
         } else {
-            return new Response(true, elements, null);
+            return Response.success(elements, null);
         }
     }
 }

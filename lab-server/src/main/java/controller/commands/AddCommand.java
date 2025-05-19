@@ -1,7 +1,8 @@
 package controller.commands;
 
-import controller.CommandType;
-import models.*;
+import ui.Command;
+import ui.CommandType;
+import models.Ticket;
 import service.CollectionManager;
 import controller.ElementInputHandler;
 import ui.Request;
@@ -26,7 +27,7 @@ public class AddCommand extends Command {
             collectionManager.add(ticket);
         }
 
-        return new Response(true, "Элемент успешно добавлен!", null);
+        return Response.success( "Элемент успешно добавлен!", null);
     }
 }
 

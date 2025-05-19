@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import models.TicketType;
 import service.CollectionManager;
 import ui.Request;
@@ -21,9 +22,9 @@ public class CountGreaterThanTypeCommand extends Command {
 
             long count = collectionManager.getCollection().stream().filter(ticket -> ticket.getType() != null && ticket.getType().compareTo(type) > 0).count();
 
-            return new Response(true, "Количество элементов, значение поля type которых больше " + type + ": " + count);
+            return Response.success("Количество элементов, значение поля type которых больше " + type + ": " + count);
         } catch (IllegalArgumentException e) {
-            return new Response(false, "Неверное значение типа. Доступные значения: USUAL, BUDGETARY, CHEAP.");
+            return Response.error("Неверное значение типа. Доступные значения: USUAL, BUDGETARY, CHEAP.");
         }
     }
 }

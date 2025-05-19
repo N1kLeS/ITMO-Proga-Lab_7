@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import controller.ElementInputHandler;
 import models.Ticket;
 import service.CollectionManager;
@@ -27,6 +28,6 @@ public class RemoveLowerCommand extends Command {
         collectionManager.getCollection().removeIf(existingTicket -> existingTicket.compareTo(ticket) < 0);
         int removedCount = initialSize - collectionManager.getCollection().size();
 
-        return new Response(true, "Удалено элементов: " + removedCount, null);
+        return Response.success("Удалено элементов: " + removedCount, null);
     }
 }

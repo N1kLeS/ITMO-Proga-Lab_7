@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
@@ -20,7 +21,7 @@ public class FilterByRefundableCommand extends Command {
         try {
             String argument = request.getArgument(0).toLowerCase();
             if (!argument.equals("true") && !argument.equals("false")) {
-                return new Response(false, "Ошибка: значение refundable должно быть строго 'true' или 'false'.", null);
+                return Response.warning("Ошибка: значение refundable должно быть строго 'true' или 'false'.");
             }
 
             Boolean refundableValue = Boolean.parseBoolean(request.getArgument(0));
@@ -28,7 +29,7 @@ public class FilterByRefundableCommand extends Command {
             var filteredTickets = collectionManager.getCollection().stream().filter(ticket -> refundableValue.equals(ticket.getRefundable())).collect(Collectors.toList());
 
             if (filteredTickets.isEmpty()) {
-                return new Response(true, "Нет элементов, у которых поле refundable равно " + refundableValue);
+                return Response.warning("Нет элементов, у которых поле refundable равно " + refundableValue);
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("Элементы, у которых поле refundable равно ")
@@ -36,10 +37,10 @@ public class FilterByRefundableCommand extends Command {
                         .append(":\n");
 
                 filteredTickets.forEach(ticket -> stringBuilder.append(ticket).append("\n"));
-                return new Response(true, stringBuilder.toString(), null);
+                return Response.success(stringBuilder.toString(), null);
             }
         } catch (Exception e) {
-            return new Response(false, "Ошибка: значение refundable должно быть true или false.", null);
+            return Response.error("Ошибка: значение refundable должно быть true или false.", null);
         }
     }
 }

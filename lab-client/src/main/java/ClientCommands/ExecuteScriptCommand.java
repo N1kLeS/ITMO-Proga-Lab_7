@@ -1,7 +1,7 @@
 //package controller.commands;
 //
 //import controller.CommandHandler;
-//import controller.CommandType;
+//import ui.CommandType;
 //import ui.Request;
 //import ui.Response;
 //

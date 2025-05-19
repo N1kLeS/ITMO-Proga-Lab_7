@@ -1,7 +1,10 @@
 package controller;
 
-import models.*;
-import models.person.*;
+import models.Coordinates;
+import models.Ticket;
+import models.TicketType;
+import models.person.Location;
+import models.person.Person;
 
 import java.text.ParseException;
 import java.time.ZonedDateTime;

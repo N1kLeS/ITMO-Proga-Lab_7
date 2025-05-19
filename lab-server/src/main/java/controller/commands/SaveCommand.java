@@ -1,6 +1,7 @@
 package controller.commands;
 
-import controller.CommandType;
+import ui.Command;
+import ui.CommandType;
 import service.CollectionManager;
 import ui.Request;
 import ui.Response;
@@ -16,9 +17,9 @@ public class SaveCommand extends Command {
     @Override
     public Response execute(Request request) {
         if (collectionManager.saveCollection()) {
-            return new Response(true, "Коллекция успешно сохранена.");
+            return Response.success("Коллекция успешно сохранена.");
         } else {
-            return new Response(false, "Ошибка при сохранении коллекции.");
+            return Response.error("Ошибка при сохранении коллекции.");
         }
     }
 }

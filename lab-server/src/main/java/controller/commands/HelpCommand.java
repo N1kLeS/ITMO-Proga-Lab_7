@@ -1,6 +1,8 @@
 package controller.commands;
 
 import controller.*;
+import ui.Command;
+import ui.CommandType;
 import ui.Request;
 import ui.Response;
 
@@ -18,10 +20,10 @@ public class HelpCommand extends Command {
 
         String commandsInfo = commandHandler.getCommands();
         if (commandsInfo.isEmpty()) {
-            return Response.failure("Нет доступных команд.");
+            return Response.warning("Нет доступных команд.");
         }
 
         helpMessage.append(commandsInfo);
-        return new Response(true, helpMessage.toString(), null);
+        return Response.success(helpMessage.toString(), null);
     }
 }
