@@ -34,6 +34,12 @@ public class RequestProcessor extends Thread {
             Request request = Serialization.deserialize(requestData);
             logger.debug("Received request from {}: {}", clientAddress, request);
 
+            if ("ping".equals(request.getCommandName())) {
+                Response pingResponse = Response.success("pong");
+                sendResponse(pingResponse);
+                return;
+            }
+
             Response response = commandHandler.handle(request);
             sendResponse(response);
         } catch (Exception e) {

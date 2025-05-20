@@ -46,6 +46,36 @@ public class CommandHandler {
         return builder.toString();
     }
 
+    public Response handle(Request request) {
+        try {
+            Command command = commands.get(request.getCommandName().toLowerCase());
+
+            if (command == null) {
+                logger.warn("Unknown command: {}", request.getCommandName());
+                return Response.error("Unknown command. Use 'help' to list available commands");
+            }
+
+            if (!validateArguments(command, request)) {
+                logger.warn("Invalid arguments for command: {}", command.getName());
+                return Response.error("Invalid arguments for command: " + command.getName());
+            }
+
+            logger.info("Executing command: {}", command.getName());
+            return command.execute(request);
+
+        } catch (Exception e) {
+            logger.error("Command execution error: {}", e.getMessage(), e);
+            return Response.error("Internal server error: " + e.getMessage());
+        }
+    }
+
+    private boolean validateArguments(Command command, Request request) {
+        int expectedArgs = command.getCommandType().getArgs();
+        int actualArgs = request.getCommandArgs().length;
+
+        return expectedArgs == -1 || actualArgs == expectedArgs;
+    }
+
     public  Command getCommand(String commandName) {
         return commands.get(commandName);
     }

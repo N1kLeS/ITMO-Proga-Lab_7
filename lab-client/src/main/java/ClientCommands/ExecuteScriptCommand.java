@@ -1,6 +1,6 @@
-//package controller.commands;
+//package ClientCommands;
 //
-//import controller.CommandHandler;
+//import ui.Command;
 //import ui.CommandType;
 //import ui.Request;
 //import ui.Response;
@@ -30,7 +30,7 @@
 //
 //        if (scriptExecutionCount.get(fileName) > 5) {
 //            scriptExecutionCount.put(fileName, scriptExecutionCount.get(fileName) - 1);
-//            return new Response(false, "Обнаружена рекурсия! Скрипт " + fileName + " вызван более 5 раз.", null);
+//            return Response.warning("Обнаружена рекурсия! Скрипт " + fileName + " вызван более 5 раз.");
 //        } else {
 //                try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 //                    String line;
@@ -57,6 +57,6 @@
 //                    }
 //                }
 //        }
-//        return new Response(true, "Турист выполнен!", null);
+//        return Response.success("Турист выполнен!");
 //    }
 //}

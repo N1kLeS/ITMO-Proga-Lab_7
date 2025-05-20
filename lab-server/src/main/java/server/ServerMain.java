@@ -1,5 +1,6 @@
 package server;
 import controller.CommandHandler;
+import controller.ElementInputHandler;
 import controller.commands.*;
 import service.CollectionManager;
 import org.apache.logging.log4j.LogManager;
@@ -17,26 +18,27 @@ public class ServerMain {
     private final int port;
     private final CollectionManager collectionManager;
     private final CommandHandler commandHandler;
+    private final ElementInputHandler inputHandler;
     private volatile boolean isRunning = true;
 
     public ServerMain(int port, String dataFile) {
         this.port = port;
         this.collectionManager = new CollectionManager(dataFile);
         this.commandHandler = new CommandHandler();
+        this.inputHandler = new ElementInputHandler();
         initializeCommands();
     }
 
     private void initializeCommands() {
-        commandHandler.register(new ExitCommand(collectionManager));
-        commandHandler.register(new AddCommand(collectionManager, null));
+        commandHandler.register(new AddCommand(collectionManager, inputHandler));
         commandHandler.register(new InfoCommand(collectionManager));
         commandHandler.register(new ShowCommand(collectionManager));
-        commandHandler.register(new UpdateCommand(collectionManager, null));
+        commandHandler.register(new UpdateCommand(collectionManager, inputHandler));
         commandHandler.register(new ClearCommand(collectionManager));
         commandHandler.register(new RemoveByIdCommand(collectionManager));
-        commandHandler.register(new AddIfMinCommand(collectionManager, null));
-        commandHandler.register(new RemoveGreaterCommand(collectionManager, null));
-        commandHandler.register(new RemoveLowerCommand(collectionManager, null));
+        commandHandler.register(new AddIfMinCommand(collectionManager, inputHandler));
+        commandHandler.register(new RemoveGreaterCommand(collectionManager, inputHandler));
+        commandHandler.register(new RemoveLowerCommand(collectionManager, inputHandler));
         commandHandler.register(new CountGreaterThanTypeCommand(collectionManager));
         commandHandler.register(new FilterByRefundableCommand(collectionManager));
         commandHandler.register(new FilterGreaterThanPersonCommand(collectionManager));
@@ -53,7 +55,7 @@ public class ServerMain {
 
             while (isRunning) {
                 processRequests(channel, buffer);
-                Thread.sleep(50); // Для снижения нагрузки на CPU
+                Thread.sleep(50);
             }
         } catch (IOException | InterruptedException e) {
             logger.error("Server error: {}", e.getMessage());
