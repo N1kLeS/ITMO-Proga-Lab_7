@@ -11,7 +11,7 @@ public class AddCommand extends Command {
     CollectionManager collectionManager;
 
     public AddCommand(CollectionManager collectionManager) {
-        super("add", "добавляет новый элемент в коллекцию", 0, CommandType.WITH_FORM);
+        super("add", "добавляет новый элемент в коллекцию", true, CommandType.WITH_FORM(Ticket.class));
         this.collectionManager = collectionManager;
     }
 
@@ -20,11 +20,10 @@ public class AddCommand extends Command {
         Ticket ticket = (Ticket) request.getData();
 
         if (collectionManager != null) {
-            System.out.println("Добавление нового элемента в коллекцию...");
             collectionManager.add(ticket);
         }
 
-        return Response.success( "Элемент успешно добавлен!", null);
+        return Response.success("Элемент успешно добавлен!", null);
     }
 }
 

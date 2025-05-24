@@ -1,8 +1,8 @@
 package controller.commands;
 
+import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;
-import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
@@ -12,7 +12,10 @@ public class FilterByRefundableCommand extends Command {
     private final CollectionManager collectionManager;
 
     public FilterByRefundableCommand(CollectionManager collectionManager) {
-        super("filter_by_refundable", "выводит элементы, значение поля refundable (true|false) которых равно заданному", 1 , CommandType.WITH_ARGUMENT);
+        super("filter_by_refundable",
+              "выводит элементы, значение поля refundable (true|false) которых равно " + "заданному",
+              true,
+              CommandType.WITH_ARGUMENTS(1));
         this.collectionManager = collectionManager;
     }
 
@@ -26,7 +29,10 @@ public class FilterByRefundableCommand extends Command {
 
             Boolean refundableValue = Boolean.parseBoolean(request.getArgument(0));
 
-            var filteredTickets = collectionManager.getCollection().stream().filter(ticket -> refundableValue.equals(ticket.getRefundable())).collect(Collectors.toList());
+            var filteredTickets = collectionManager.getCollection()
+                    .stream()
+                    .filter(ticket -> refundableValue.equals(ticket.getRefundable()))
+                    .collect(Collectors.toList());
 
             if (filteredTickets.isEmpty()) {
                 return Response.warning("Нет элементов, у которых поле refundable равно " + refundableValue);

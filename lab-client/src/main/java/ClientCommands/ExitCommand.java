@@ -8,7 +8,7 @@ import ui.Response;
 
 public class ExitCommand extends Command {
     public ExitCommand() {
-        super("exit", "выходит из клиента", 0, CommandType.WITHOUT_ARGUMENTS);
+        super("exit", "выходит из клиента", false, CommandType.WITHOUT_DATA());
     }
 
     @Override

@@ -1,14 +1,15 @@
 package controller.commands;
 
-import controller.*;
+import controller.CommandHandler;
 import ui.*;
 
 import java.util.ArrayList;
 
 public class HelpCommand extends Command {
     CommandHandler commandHandler;
+
     public HelpCommand(CommandHandler commandHandler) {
-        super("help", "выводит информацию о всех доступных командах", 0, CommandType.WITHOUT_ARGUMENTS);
+        super("help", "выводит информацию о всех доступных командах", true, CommandType.WITHOUT_DATA());
         this.commandHandler = commandHandler;
     }
 

@@ -11,7 +11,10 @@ public class CountGreaterThanTypeCommand extends Command {
     private final CollectionManager collectionManager;
 
     public CountGreaterThanTypeCommand(CollectionManager collectionManager) {
-        super("count_greater_than_type", "выводит количество элементов, значение поля type (USUAL, BUDGETARY, CHEAP) которых больше заданного", 1, CommandType.WITH_ARGUMENT);
+        super("count_greater_than_type",
+              "выводит количество элементов, значение поля type (USUAL, BUDGETARY, CHEAP) которых больше заданного",
+              true,
+              CommandType.WITH_ARGUMENTS(1));
         this.collectionManager = collectionManager;
     }
 
@@ -20,7 +23,10 @@ public class CountGreaterThanTypeCommand extends Command {
         try {
             TicketType type = TicketType.valueOf(request.getArgument(0).toUpperCase());
 
-            long count = collectionManager.getCollection().stream().filter(ticket -> ticket.getType() != null && ticket.getType().compareTo(type) > 0).count();
+            long count = collectionManager.getCollection()
+                    .stream()
+                    .filter(ticket -> ticket.getType() != null && ticket.getType().compareTo(type) > 0)
+                    .count();
 
             return Response.success("Количество элементов, значение поля type которых больше " + type + ": " + count);
         } catch (IllegalArgumentException e) {

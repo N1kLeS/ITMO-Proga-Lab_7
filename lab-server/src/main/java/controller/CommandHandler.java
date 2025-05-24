@@ -1,6 +1,5 @@
 package controller;
 
-import models.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.*;
@@ -24,7 +23,7 @@ public class CommandHandler {
         String[] args = request.getCommandArgs();
 
 
-        if (commandType == CommandType.WITHOUT_ARGUMENTS) {
+        if (commandType == CommandType.WITHOUT_DATA()) {
             if (args.length == 0) {
                 return command.execute(request);
             }
@@ -73,7 +72,7 @@ public class CommandHandler {
         return expectedArgs == -1 || actualArgs == expectedArgs;
     }
 
-    public  Command getCommand(String commandName) {
+    public Command getCommand(String commandName) {
         return commands.get(commandName);
     }
 

@@ -1,13 +1,13 @@
 package models.person;
 
+import models.AbstractModel;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Person implements Comparable<Person>, Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Person extends AbstractModel implements Comparable<Person> {
     private java.util.Date birthday; //Поле не может быть null
     private int weight; //Значение поля должно быть больше 0
     private String passportID; //Поле не может быть null

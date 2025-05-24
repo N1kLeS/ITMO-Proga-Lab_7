@@ -1,34 +1,43 @@
 package ui;
 
 import lombok.Getter;
+import models.AbstractModel;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
-public enum CommandType implements Serializable {
-    WITHOUT_ARGUMENTS(0, false, "Команда без аргументов"),
-    WITH_ARGUMENT(0, false, "Команда с одним аргументом"),
-    WITH_MANY_ARGUMENTS(1, false, "Команда с несколькими аргументами"),
-    WITH_FORM(-1, true,"Команда с формой данных"),
-    WITH_ARGUMENT_FORM(1, true, "Команда с аргументом и формой");
-
-    private final int argumentCount;
-    private final boolean needForm;
-    private final String description;
-
+public class CommandType implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    CommandType(int argumentCount, boolean needForm, String description) {
+    private final int argumentCount;
+    private final Class<? extends AbstractModel> formClass;
+
+
+    private CommandType(int argumentCount, Class<? extends AbstractModel> formClass) {
         this.argumentCount = argumentCount;
-        this.needForm = needForm;
-        this.description = description;
+        this.formClass = formClass;
+    }
+
+    public static CommandType WITHOUT_DATA() {
+        return new CommandType(0, null);
+    }
+
+    public static CommandType WITH_ARGUMENTS(int argumentCount) {
+        return new CommandType(argumentCount, null);
+    }
+
+    public static CommandType WITH_FORM(Class<? extends AbstractModel> formClass) {
+        return new CommandType(0, formClass);
+    }
+
+    public static CommandType WITH_ARGUMENTS_AND_FORM(int argumentCount, Class<? extends AbstractModel> formClass) {
+        return new CommandType(argumentCount, formClass);
     }
 
 
-    public boolean validateArguments(int actualArguments) {
-        if (argumentCount == -1) return true;
-        return actualArguments == argumentCount;
+    public boolean hasForm() {
+        return formClass != null;
     }
 }

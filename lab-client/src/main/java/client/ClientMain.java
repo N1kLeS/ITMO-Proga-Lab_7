@@ -1,12 +1,8 @@
 package client;
 
-import models.Ticket;
-import ui.Request;
-import ui.Response;
-import ui.CommandInfo;
-import ui.Serialization;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ui.*;
 import utils.ElementInputHandler;
 
 import java.io.IOException;
@@ -79,8 +75,7 @@ public class ClientMain {
                     return;
                 }
             } catch (IOException e) {
-                logger.warn("Connection check attempt {}/{} failed: {}",
-                        attempt, CONNECTION_ATTEMPTS, e.getMessage());
+                logger.warn("Connection check attempt {}/{} failed: {}", attempt, CONNECTION_ATTEMPTS, e.getMessage());
             }
 
             if (Duration.between(startTime, Instant.now()).getSeconds() > RESPONSE_TIMEOUT_SEC) {
@@ -159,21 +154,27 @@ public class ClientMain {
                     String commandName = parts[0];
                     String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
 
-//                    if (args.length != commandsList.size()) {
-//                        System.out.println("Неверное количество аргументов!");
-//                        continue;
-//                    }
+
+                    if (!commandsList.containsKey(commandName)) {
+                        System.out.println("Неизвестная команда: " + commandName);
+                        continue;
+                    }
+
+                    CommandType commandType = commandsList.get(commandName).getCommandType();
+                    if (commandType.getArgumentCount() != args.length) {
+                        System.out.println("Неверное количество аргументов для команды: " + commandName);
+                        continue;
+                    }
 
                     Response response;
+                    Object object = null;
 
-                    if (commandsList.get(commandName).getCommandType().isNeedForm()){
+                    if (commandType.hasForm()) {
                         ElementInputHandler inputHandler = new ElementInputHandler();
-                        Ticket ticket = inputHandler.createTicket();
-
-                        response = sendRequestWithRetry(new Request(commandName, args, ticket));
-                    } else {
-                        response = sendRequestWithRetry(new Request(commandName, args));
+                        object = inputHandler.readValue(commandType.getFormClass());
                     }
+
+                    response = sendRequestWithRetry(new Request(commandName, args, object));
 
                     handleResponse(response);
                 } catch (Exception e) {

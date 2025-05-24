@@ -1,25 +1,25 @@
 package controller.commands;
 
-import ui.Command;
-import ui.CommandType;
 import models.Ticket;
 import service.CollectionManager;
+import ui.Command;
+import ui.CommandType;
 import ui.Request;
 import ui.Response;
 
 public class RemoveLowerCommand extends Command {
     private final CollectionManager collectionManager;
-
-
+    
     public RemoveLowerCommand(CollectionManager collectionManager) {
-        super("remove_lower", "удаляет из коллекции все элементы, меньшие, чем заданный", 0, CommandType.WITH_FORM);
+        super("remove_lower",
+              "удаляет из коллекции все элементы, меньшие, чем заданный",
+              true,
+              CommandType.WITH_FORM(Ticket.class));
         this.collectionManager = collectionManager;
     }
 
     @Override
     public Response execute(Request request) {
-
-        System.out.println("Введите данные для элемента:");
         Ticket ticket = (Ticket) request.getData();
 
         int initialSize = collectionManager.getCollection().size();

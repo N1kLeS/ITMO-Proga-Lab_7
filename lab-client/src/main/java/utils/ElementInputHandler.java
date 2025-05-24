@@ -1,29 +1,37 @@
 package utils;
 
+import models.AbstractModel;
 import models.Coordinates;
 import models.Ticket;
 import models.TicketType;
 import models.person.Location;
 import models.person.Person;
 
-import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.Scanner;
 
 public class ElementInputHandler {
     private final Scanner scanner = new Scanner(System.in);
 
+    public Object readValue(Class<? extends AbstractModel> type) {
+        if (type == Ticket.class) {
+            return createTicket();
+        } else if (type == Person.class) {
+            return readPerson();
+        } else if (type == Coordinates.class) {
+            return createCoordinates();
+        } else if (type == Location.class) {
+            return createLocation();
+        }
+
+        throw new IllegalArgumentException("Unsupported type: " + type.getName());
+    }
+
     public Ticket createTicket() {
         System.out.print("Введите имя билета: ");
         String name = inputNonEmptyString();
 
-        System.out.print("Введите координату X: ");
-        int x = inputInt();
-
-        System.out.print("Введите координату Y: ");
-        int y = inputInt();
-
-        Coordinates coordinates = new Coordinates(x, y);
+        Coordinates coordinates = createCoordinates();
 
         System.out.print("Введите цену билета: ");
         int price = inputPositiveInt();
@@ -46,6 +54,16 @@ public class ElementInputHandler {
                 type,
                 person
         );
+    }
+
+    private Coordinates createCoordinates() {
+        System.out.print("Введите координату X: ");
+        int x = inputInt();
+
+        System.out.print("Введите координату Y: ");
+        int y = inputInt();
+
+        return new Coordinates(x, y);
     }
 
     private Person createPerson() {
@@ -161,7 +179,7 @@ public class ElementInputHandler {
         return ticket;
     }
 
-    public Person readPerson() throws ParseException {
+    public Person readPerson() {
         Person person = createPerson();
         return person;
     }

@@ -1,8 +1,8 @@
 package controller.commands;
 
+import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;
-import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
@@ -10,7 +10,7 @@ public class ShowCommand extends Command {
     private CollectionManager collectionManager;
 
     public ShowCommand(CollectionManager collectionManager) {
-        super("show", "вывести все существующие тикеты", 0, CommandType.WITHOUT_ARGUMENTS);
+        super("show", "вывести все существующие тикеты", true, CommandType.WITHOUT_DATA());
         this.collectionManager = collectionManager;
     }
 

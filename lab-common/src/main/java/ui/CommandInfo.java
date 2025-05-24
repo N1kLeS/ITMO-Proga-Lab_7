@@ -4,7 +4,7 @@ public class CommandInfo extends CommandBase {
     public CommandInfo(Command command) {
         this.name = command.getName();
         this.info = command.getInfo();
-        this.argumentCount = command.getArgumentCount();
+        this.isServerCommand = command.isServerCommand();
         this.commandType = command.getCommandType();
     }
 

@@ -1,11 +1,11 @@
 package models.person;
 
+import models.AbstractModel;
+
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Location implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Location extends AbstractModel {
     private Integer x; //Поле не может быть null
     private Integer y; //Поле не может быть null
     private Float z; //Поле не может быть null

@@ -1,8 +1,8 @@
 package controller.commands;
 
+import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;
-import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
@@ -10,7 +10,7 @@ public class RemoveByIdCommand extends Command {
     private final CollectionManager collectionManager;
 
     public RemoveByIdCommand(CollectionManager collectionManager) {
-        super("remove_by_id", "удаление тикета по id", 1, CommandType.WITH_ARGUMENT);
+        super("remove_by_id", "удаление тикета по id", true, CommandType.WITH_ARGUMENTS(1));
         this.collectionManager = collectionManager;
     }
 
@@ -24,7 +24,7 @@ public class RemoveByIdCommand extends Command {
                 return Response.warning("Элемент с id " + id + " не найден.");
             }
         } catch (NumberFormatException e) {
-            return Response.error( "Ошибка: id должен быть числом.");
+            return Response.error("Ошибка: id должен быть числом.");
         }
     }
 }
