@@ -2,16 +2,14 @@ package models.person;
 
 import models.AbstractModel;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Person extends AbstractModel implements Comparable<Person> {
-    private java.util.Date birthday; //Поле не может быть null
-    private int weight; //Значение поля должно быть больше 0
-    private String passportID; //Поле не может быть null
-    private Location location; //Поле не может быть null
+    private final java.util.Date birthday; //Поле не может быть null
+    private final int weight; //Значение поля должно быть больше 0
+    private final String passportID; //Поле не может быть null
+    private final Location location; //Поле не может быть null
 
     public Person(Date birthday, int weight, String passportID, Location location) {
         this.birthday = birthday;

@@ -1,20 +1,21 @@
 package models;
 
+import lombok.Getter;
 import models.person.Person;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 public class Ticket extends AbstractModel {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private int price; //Значение поля должно быть больше 0
-    private Boolean refundable; //Поле может быть null
-    private TicketType type; //Поле может быть null
-    private Person person; //Поле не может быть null
+    private final String name; //Поле не может быть null, Строка не может быть пустой
+    private final Coordinates coordinates; //Поле не может быть null
+    private final java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private final int price; //Значение поля должно быть больше 0
+    @Getter
+    private final Boolean refundable; //Поле может быть null
+    @Getter
+    private final TicketType type; //Поле может быть null
+    private final Person person; //Поле не может быть null
 
 
     public Ticket(String name, Coordinates coordinates, ZonedDateTime creationDate,
@@ -22,7 +23,14 @@ public class Ticket extends AbstractModel {
         this(null, name, coordinates, creationDate, price, refundable, type, person);
     }
 
-    public Ticket(Long id, String name, Coordinates coordinates, ZonedDateTime creationDate, int price, Boolean refundable, TicketType type, Person person) {
+    public Ticket(Long id,
+                  String name,
+                  Coordinates coordinates,
+                  ZonedDateTime creationDate,
+                  int price,
+                  Boolean refundable,
+                  TicketType type,
+                  Person person) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
@@ -35,8 +43,16 @@ public class Ticket extends AbstractModel {
 
     @Override
     public String toString() {
-        return String.format("Ticket { id=%d, name='%s', coordinates=%s, creationDate=%s, price=%d, refundable=%s, type=%s, person=%s }",
-                id, name, coordinates, creationDate, price, refundable, type, person);
+        return String.format(
+                "Ticket { id=%d, name='%s', coordinates=%s, creationDate=%s, price=%d, refundable=%s, type=%s, person=%s }",
+                id,
+                name,
+                coordinates,
+                creationDate,
+                price,
+                refundable,
+                type,
+                person);
     }
 
     public Object getId() {
@@ -47,7 +63,7 @@ public class Ticket extends AbstractModel {
         return id + "," + name + "," + coordinates.toCsvString() + "," +
                 creationDate + "," + price + "," +
                 (refundable != null ? refundable : "") + "," +
-                type  + "," +
+                type + "," +
                 person.toCsvString();
     }
 
@@ -70,14 +86,6 @@ public class Ticket extends AbstractModel {
             throw new IllegalArgumentException("Некорректный ID");
         }
         this.id = id;
-    }
-
-    public TicketType getType() {
-        return type;
-    }
-
-    public Boolean getRefundable() {
-        return refundable;
     }
 
     public Comparable<Person> getPerson() {

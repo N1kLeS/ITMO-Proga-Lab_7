@@ -1,9 +1,12 @@
 package ui;
 
+import lombok.Getter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
 public class Response implements Serializable {
     private final Status status;
     private final String message;
@@ -48,34 +51,22 @@ public class Response implements Serializable {
         return new Response(Status.ERROR, message + ": " + exception.getMessage(), null);
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
     public boolean isSuccess() {
         return status == Status.SUCCESS;
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(String.format("%s: %s\n", status, message));
+        StringBuilder result = new StringBuilder(String.format("%s:\n%s", status, message));
 
         if (data != null) {
             if (data instanceof java.util.List<?> list) {
-                for (int i = 0; i < list.size(); i++) {
-                    if (i > 0) result.append("\n");
-                    result.append(list.get(i) != null ? list.get(i).toString() : "null");
+                for (Object o : list) {
+                    result.append("\n");
+                    result.append(o != null ? o.toString() : "null");
                 }
             } else {
-                result.append("\nData: ").append(data.toString());
+                result.append("\n").append(data);
             }
         }
 

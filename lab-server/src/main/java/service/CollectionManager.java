@@ -10,10 +10,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
-import java.time.ZonedDateTime;
-import java.util.Set;
 
 public class CollectionManager {
     private final HashSet<Ticket> collection;
@@ -27,11 +27,11 @@ public class CollectionManager {
         loadCollection(file);
     }
 
-    public Set<Ticket> getCollection() {
-        return collection;
+    public ArrayList<Ticket> getCollection() {
+        return new ArrayList<>(collection);
     }
 
-//Автомат. загрузка из файла
+    //Автомат. загрузка из файла
     public void loadCollection(String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -87,21 +87,7 @@ public class CollectionManager {
     }
 
 
-//Команда показа
-    public String getAllElements() {
-        if (collection.isEmpty()) {
-            return "Коллекция пуста.";
-        }
-
-        StringBuilder elements = new StringBuilder();
-        for (Ticket ticket : collection) {
-            elements.append(ticket.toString()).append("\n");
-
-        }
-        return elements.toString();
-    }
-
-//Команда инфы о коллекции
+    //Команда инфы о коллекции
     public String getCollectionInfo() {
         return String.format(
                 "Тип коллекции: %s\nДата инициализации: %s\nКоличество элементов: %d",
@@ -111,7 +97,7 @@ public class CollectionManager {
         );
     }
 
-//Команда замены тикета по айди
+    //Команда замены тикета по айди
     public boolean updateElementById(Long id, Ticket updatedTicket) {
         Optional<Ticket> ticketToUpdate = collection.stream()
                 .filter(ticket -> ticket.getId().equals(id))
@@ -126,17 +112,17 @@ public class CollectionManager {
         }
     }
 
-//Добавление
+    //Добавление
     public void add(Ticket ticket) {
         collection.add(ticket);
     }
 
-//Отчистка
+    //Отчистка
     public void clearCollection() {
         collection.clear();
     }
 
-//Удаление по id
+    //Удаление по id
     public boolean removeById(Long id) {
         Optional<Ticket> ticketToRemove = collection.stream()
                 .filter(ticket -> ticket.getId().equals(id))
@@ -150,7 +136,7 @@ public class CollectionManager {
         }
     }
 
-//Сохранение в форм. csv
+    //Сохранение в форм. csv
     public boolean saveCollection() {
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Ticket ticket : collection) {

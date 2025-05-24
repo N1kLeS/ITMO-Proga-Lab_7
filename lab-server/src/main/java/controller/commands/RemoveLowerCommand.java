@@ -9,7 +9,7 @@ import ui.Response;
 
 public class RemoveLowerCommand extends Command {
     private final CollectionManager collectionManager;
-    
+
     public RemoveLowerCommand(CollectionManager collectionManager) {
         super("remove_lower",
               "удаляет из коллекции все элементы, меньшие, чем заданный",
@@ -26,6 +26,6 @@ public class RemoveLowerCommand extends Command {
         collectionManager.getCollection().removeIf(existingTicket -> existingTicket.compareTo(ticket) < 0);
         int removedCount = initialSize - collectionManager.getCollection().size();
 
-        return Response.success("Удалено элементов: " + removedCount, null);
+        return Response.success("Удалено элементов: " + removedCount);
     }
 }

@@ -1,10 +1,10 @@
 package server;
-import controller.CommandHandler;
+
 import controller.commands.*;
-import service.CollectionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ui.Response;
+import service.CollectionManager;
+import ui.CommandHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -46,7 +46,7 @@ public class ServerMain {
     }
 
     public void start() {
-        logger.info("Starting server on port {}", port);
+        logger.info("Запускаем сервер на порту {}", port);
 
         try (DatagramChannel channel = DatagramChannel.open()) {
             channel.bind(new InetSocketAddress(port));
@@ -58,7 +58,7 @@ public class ServerMain {
                 Thread.sleep(50);
             }
         } catch (IOException | InterruptedException e) {
-            logger.error("Server error: {}", e.getMessage());
+            logger.error("Ошибка сервера: {}", e.getMessage());
         } finally {
             collectionManager.saveCollection();
         }

@@ -31,15 +31,12 @@ public class FilterGreaterThanPersonCommand extends Command {
 
             if (filteredTickets.isEmpty()) {
                 return Response.warning("Нет элементов, у которых поле person больше указанного.");
-            } else {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("Элементы, у которых поле person больше указанного:\n");
-                filteredTickets.forEach(ticket -> stringBuilder.append(ticket).append("\n"));
-
-                return Response.success(stringBuilder.toString(), null);
             }
+
+            return Response.success("Элементы, у которых поле person больше указанного:", filteredTickets);
+
         } catch (Exception e) {
-            return Response.error("Ошибка при вводе объекта person: " + e.getMessage(), null);
+            return Response.error("Ошибка при вводе объекта person: " + e.getMessage());
         }
     }
 }

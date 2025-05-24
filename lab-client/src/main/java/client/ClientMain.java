@@ -1,5 +1,6 @@
 package client;
 
+import ClientCommands.ExitClientCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.*;
@@ -33,15 +34,24 @@ public class ClientMain {
     private final DatagramChannel channel;
     private volatile boolean isConnected = false;
     private final ScheduledExecutorService heartbeatExecutor = Executors.newSingleThreadScheduledExecutor();
-    private HashMap<String, CommandInfo> commandsList;
+    private final HashMap<String, CommandInfo> serverCommandsInfoList;
+    private final CommandHandler clientCommandHandler;
 
     public ClientMain(String host, int port) throws IOException {
         this.host = host;
         this.port = port;
         this.channel = DatagramChannel.open();
         this.channel.configureBlocking(false);
-        this.commandsList = new HashMap<>();
+        this.serverCommandsInfoList = new HashMap<>();
+        this.clientCommandHandler = new CommandHandler();
+
+        registerClientCommands();
+
         connectToServer();
+    }
+
+    private void registerClientCommands() {
+        clientCommandHandler.register(new ExitClientCommand());
     }
 
     private void connectToServer() throws IOException {
@@ -133,7 +143,7 @@ public class ClientMain {
         Response response = sendRequestWithRetry(new Request("help", new String[0]));
 
         for (CommandInfo commandInfo : (ArrayList<CommandInfo>) response.getData())
-            this.commandsList.put(commandInfo.getName(), commandInfo);
+            this.serverCommandsInfoList.put(commandInfo.getName(), commandInfo);
 
     }
 
@@ -155,15 +165,28 @@ public class ClientMain {
                     String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
 
 
-                    if (!commandsList.containsKey(commandName)) {
+                    if (!serverCommandsInfoList.containsKey(commandName)) {
                         System.out.println("Неизвестная команда: " + commandName);
                         continue;
                     }
 
-                    CommandType commandType = commandsList.get(commandName).getCommandType();
+                    logger.info("Processing command: {}", commandName);
+
+                    CommandInfo command = serverCommandsInfoList.get(commandName);
+                    CommandType commandType = command.getCommandType();
                     if (commandType.getArgumentCount() != args.length) {
                         System.out.println("Неверное количество аргументов для команды: " + commandName);
                         continue;
+                    }
+
+                    if (!command.isServerCommand()) {
+                        Command clientCommand = clientCommandHandler.getCommand(commandName);
+                        if (clientCommand != null) {
+                            clientCommand.execute(new Request(commandName, args));
+                        } else {
+                            System.out.println("Команда не найдена: " + commandName);
+                            continue;
+                        }
                     }
 
                     Response response;
@@ -231,6 +254,7 @@ public class ClientMain {
         }
         throw new IOException("Response timeout");
     }
+
 
     private void handleResponse(Response response) {
         if (response != null) {

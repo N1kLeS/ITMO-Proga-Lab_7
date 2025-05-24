@@ -1,11 +1,8 @@
 package models;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 public class Coordinates extends AbstractModel {
-    private Integer x; //Поле не может быть null
-    private int y;
+    private final Integer x; //Поле не может быть null
+    private final int y;
 
     public Coordinates(int x, int y) {
         this.x = x;

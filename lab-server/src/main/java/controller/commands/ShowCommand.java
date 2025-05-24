@@ -1,13 +1,16 @@
 package controller.commands;
 
+import models.Ticket;
 import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;
 import ui.Request;
 import ui.Response;
 
+import java.util.ArrayList;
+
 public class ShowCommand extends Command {
-    private CollectionManager collectionManager;
+    private final CollectionManager collectionManager;
 
     public ShowCommand(CollectionManager collectionManager) {
         super("show", "вывести все существующие тикеты", true, CommandType.WITHOUT_DATA());
@@ -16,12 +19,12 @@ public class ShowCommand extends Command {
 
     @Override
     public Response execute(Request request) {
-        String elements = collectionManager.getAllElements();
+        ArrayList<Ticket> elements = collectionManager.getCollection();
 
         if (elements == null || elements.isEmpty()) {
             return Response.warning("Коллекция пуста.");
         } else {
-            return Response.success(elements, null);
+            return Response.success("Элементы коллекции:", elements);
         }
     }
 }

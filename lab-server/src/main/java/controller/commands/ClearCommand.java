@@ -1,8 +1,8 @@
 package controller.commands;
 
+import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;
-import service.CollectionManager;
 import ui.Request;
 import ui.Response;
 
@@ -17,6 +17,6 @@ public class ClearCommand extends Command {
     @Override
     public Response execute(Request request) {
         collectionManager.clearCollection();
-        return Response.success("Коллекция успешно очищена.", null);
+        return Response.success("Коллекция успешно очищена.");
     }
 }

@@ -1,8 +1,7 @@
-package controller;
+package ui;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ui.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,28 +17,13 @@ public class CommandHandler {
         logger.debug("Registered command: {}", command.getName());
     }
 
-    public Response execute(Command command, Request request) {
-        CommandType commandType = command.getCommandType();
-        String[] args = request.getCommandArgs();
-
-
-        if (commandType == CommandType.WITHOUT_DATA()) {
-            if (args.length == 0) {
-                return command.execute(request);
-            }
-            return Response.error("Команда не принимает аргументы.");
-        }
-
-        if (commandType.getArgumentCount() == args.length || commandType.getArgumentCount() == -1) {
-            return command.execute(request);
-        }
-
-        return Response.warning("Неверное количество аргументов для команды: " + command.getName());
-    }
 
     public ArrayList<Command> getCommands() {
-        ArrayList<Command> commands = new ArrayList<>(this.commands.values());
-        return commands;
+        return new ArrayList<>(this.commands.values());
+    }
+
+    public Command getCommand(String name) {
+        return commands.get(name);
     }
 
     public Response handle(Request request) {
@@ -69,29 +53,7 @@ public class CommandHandler {
         int expectedArgs = command.getCommandType().getArgumentCount();
         int actualArgs = request.getCommandArgs().length;
 
-        return expectedArgs == -1 || actualArgs == expectedArgs;
-    }
-
-    public Command getCommand(String commandName) {
-        return commands.get(commandName);
-    }
-
-    public Response executeCommand(String commandName, Request request) {
-        try {
-            Command command = commands.get(commandName.toLowerCase());
-
-            if (command == null) {
-                return Response.warning("Неизвестная команда. Введите 'help' для списка доступных команд.");
-            }
-
-            return command.execute(request);
-        } catch (Exception e) {
-            return Response.error("Ошибка при выполнении команды: " + e.getMessage());
-        }
-    }
-
-    public boolean hasCommand(String commandName) {
-        return commands.containsKey(commandName.toLowerCase());
+        return actualArgs == expectedArgs;
     }
 
     public ArrayList<CommandInfo> getCommandInfos() {

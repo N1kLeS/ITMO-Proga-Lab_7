@@ -17,7 +17,7 @@ public class ElementInputHandler {
         if (type == Ticket.class) {
             return createTicket();
         } else if (type == Person.class) {
-            return readPerson();
+            return createPerson();
         } else if (type == Coordinates.class) {
             return createCoordinates();
         } else if (type == Location.class) {
@@ -27,7 +27,7 @@ public class ElementInputHandler {
         throw new IllegalArgumentException("Unsupported type: " + type.getName());
     }
 
-    public Ticket createTicket() {
+    private Ticket createTicket() {
         System.out.print("Введите имя билета: ");
         String name = inputNonEmptyString();
 
@@ -40,7 +40,7 @@ public class ElementInputHandler {
         Boolean refundable = inputBooleanOrNull();
 
         System.out.print("Выберите тип билета (USUAL, BUDGETARY, CHEAP): ");
-        TicketType type = inputEnum(TicketType.class);
+        TicketType type = inputEnum();
 
         Person person = createPerson();
 
@@ -149,12 +149,12 @@ public class ElementInputHandler {
         }
     }
 
-    private <T extends Enum<T>> T inputEnum(Class<T> enumType) {
+    private <T extends Enum<T>> T inputEnum() {
         while (true) {
             try {
-                return Enum.valueOf(enumType, scanner.nextLine().trim().toUpperCase());
+                return Enum.valueOf((Class<T>) TicketType.class, scanner.nextLine().trim().toUpperCase());
             } catch (IllegalArgumentException e) {
-                System.out.println("Неверное значение. Доступные значения: " + java.util.Arrays.toString(enumType.getEnumConstants()));
+                System.out.println("Неверное значение. Доступные значения: " + java.util.Arrays.toString(((Class<T>) TicketType.class).getEnumConstants()));
             }
         }
     }
@@ -172,16 +172,6 @@ public class ElementInputHandler {
 
     private long generateId() {
         return System.currentTimeMillis();
-    }
-
-    public Ticket readElement() {
-        Ticket ticket = createTicket();
-        return ticket;
-    }
-
-    public Person readPerson() {
-        Person person = createPerson();
-        return person;
     }
 }
 

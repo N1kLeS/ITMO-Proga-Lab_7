@@ -1,12 +1,11 @@
 package server;
 
-import controller.CommandHandler;
-import models.Ticket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ui.CommandHandler;
 import ui.Request;
 import ui.Response;
 import ui.Serialization;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

@@ -12,6 +12,6 @@ public class ExecuteScriptCommand extends Command {
 
     @Override
     public Response execute(Request request) {
-        return Response.success("Турист выполнен!");
+        return Response.success("Скрипт выполнен!");
     }
 }

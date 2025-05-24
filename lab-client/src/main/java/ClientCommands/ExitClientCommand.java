@@ -6,8 +6,8 @@ import ui.Request;
 import ui.Response;
 
 
-public class ExitCommand extends Command {
-    public ExitCommand() {
+public class ExitClientCommand extends Command {
+    public ExitClientCommand() {
         super("exit", "выходит из клиента", false, CommandType.WITHOUT_DATA());
     }
 

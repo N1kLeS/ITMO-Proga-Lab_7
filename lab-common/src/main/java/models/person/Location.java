@@ -2,14 +2,11 @@ package models.person;
 
 import models.AbstractModel;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 public class Location extends AbstractModel {
-    private Integer x; //Поле не может быть null
-    private Integer y; //Поле не может быть null
-    private Float z; //Поле не может быть null
-    private String name; //Поле не может быть null
+    private final Integer x; //Поле не может быть null
+    private final Integer y; //Поле не может быть null
+    private final Float z; //Поле не может быть null
+    private final String name; //Поле не может быть null
 
     public Location(int x, int y, float z, String name) {
         this.x = x;
