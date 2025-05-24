@@ -54,7 +54,8 @@ public class RequestManager {
         if (!command.isServerCommand()) {
             Command clientCommand = clientCommandHandler.getCommand(commandName);
             if (clientCommand != null) {
-                clientCommand.execute(new Request(commandName, args));
+                Response response = clientCommand.execute(new Request(commandName, args));
+                System.out.println(response);
             } else {
                 System.out.println("Команда не найдена: " + commandName);
                 throw new RuntimeException("<UNK> <UNK>: " + commandName);
