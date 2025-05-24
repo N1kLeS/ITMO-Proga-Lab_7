@@ -18,9 +18,9 @@ public class AddCommand extends Command {
     @Override
     public Response execute(Request request) {
         Ticket ticket = (Ticket) request.getData();
-
+        ticket.setId(collectionManager.generateId());
         collectionManager.add(ticket);
-        
+
         return Response.success("Элемент успешно добавлен!");
     }
 }

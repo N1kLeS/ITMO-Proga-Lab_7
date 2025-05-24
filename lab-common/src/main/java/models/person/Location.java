@@ -1,7 +1,9 @@
 package models.person;
 
+import lombok.ToString;
 import models.AbstractModel;
 
+@ToString
 public class Location extends AbstractModel {
     private final Integer x; //Поле не может быть null
     private final Integer y; //Поле не может быть null
@@ -15,10 +17,10 @@ public class Location extends AbstractModel {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return x + ", " + y + ", " + z + ", " + name;
-    }
+//    @Override
+//    public String toString() {
+//        return x + ", " + y + ", " + z + ", " + name;
+//    }
 
     public String toCsvString() {
         return (x != null ? x : "") + "," +

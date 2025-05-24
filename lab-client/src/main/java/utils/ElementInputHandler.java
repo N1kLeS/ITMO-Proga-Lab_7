@@ -49,7 +49,7 @@ public class ElementInputHandler {
         Person person = createPerson();
 
         return new Ticket(
-                generateId(),
+                null,
                 name,
                 coordinates,
                 ZonedDateTime.now(),
@@ -172,10 +172,6 @@ public class ElementInputHandler {
                 System.out.print("Введите дату в формате yyyy-MM-dd: ");
             }
         }
-    }
-
-    private long generateId() {
-        return System.currentTimeMillis();
     }
 }
 

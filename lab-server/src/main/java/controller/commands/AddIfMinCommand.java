@@ -1,9 +1,9 @@
 package controller.commands;
 
-import ui.Command;
-import ui.CommandType;
 import models.Ticket;
 import service.CollectionManager;
+import ui.Command;
+import ui.CommandType;
 import ui.Request;
 import ui.Response;
 
@@ -26,7 +26,7 @@ public class AddIfMinCommand extends Command {
     @Override
     public Response execute(Request request) {
         Ticket ticket = (Ticket) request.getData();
-
+        ticket.setId(collectionManager.generateId());
         Optional<Ticket> minTicket = collectionManager.getCollection().stream().min(Ticket::compareTo);
 
         if (minTicket.isEmpty() || ticket.compareTo(minTicket.get()) < 0) {

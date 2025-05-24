@@ -148,4 +148,8 @@ public class CollectionManager {
             return false;
         }
     }
+
+    public long generateId() {
+        return System.currentTimeMillis();
+    }
 }

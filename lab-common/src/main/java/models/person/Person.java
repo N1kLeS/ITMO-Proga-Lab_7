@@ -1,10 +1,12 @@
 package models.person;
 
+import lombok.ToString;
 import models.AbstractModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@ToString
 public class Person extends AbstractModel implements Comparable<Person> {
     private final java.util.Date birthday; //Поле не может быть null
     private final int weight; //Значение поля должно быть больше 0
@@ -28,10 +30,10 @@ public class Person extends AbstractModel implements Comparable<Person> {
                 (location != null ? location.toCsvString() : "");
     }
 
-    @Override
-    public String toString() {
-        return birthday + ", " + weight + ", " + passportID + ", " + location.toString();
-    }
+//    @Override
+//    public String toString() {
+//        return birthday + ", " + weight + ", " + passportID + ", " + location.toString();
+//    }
 
     @Override
     public int compareTo(Person other) {

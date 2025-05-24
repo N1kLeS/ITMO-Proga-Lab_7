@@ -8,6 +8,7 @@ import ui.Request;
 import ui.Response;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ShowCommand extends Command {
     private final CollectionManager collectionManager;
@@ -20,6 +21,8 @@ public class ShowCommand extends Command {
     @Override
     public Response execute(Request request) {
         ArrayList<Ticket> elements = collectionManager.getCollection();
+        
+        elements.sort(Comparator.comparing(Ticket::getName));
 
         if (elements == null || elements.isEmpty()) {
             return Response.warning("Коллекция пуста.");

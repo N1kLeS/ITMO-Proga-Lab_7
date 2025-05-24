@@ -20,6 +20,7 @@ public class UpdateCommand extends Command {
         try {
             Long id = Long.parseLong(request.getArgument(0));
             Ticket ticket = (Ticket) request.getData();
+            ticket.setId(id);
 
             if (collectionManager.updateElementById(id, ticket)) {
                 return Response.success("Элемент с id " + id + " успешно обновлён.");

@@ -1,12 +1,15 @@
 package models;
 
 import lombok.Getter;
+import lombok.ToString;
 import models.person.Person;
 
 import java.time.ZonedDateTime;
 
+@ToString
 public class Ticket extends AbstractModel {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    @Getter
     private final String name; //Поле не может быть null, Строка не может быть пустой
     private final Coordinates coordinates; //Поле не может быть null
     private final java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
@@ -41,19 +44,19 @@ public class Ticket extends AbstractModel {
         this.person = person;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Ticket { id=%d, name='%s', coordinates=%s, creationDate=%s, price=%d, refundable=%s, type=%s, person=%s }",
-                id,
-                name,
-                coordinates,
-                creationDate,
-                price,
-                refundable,
-                type,
-                person);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format(
+//                "Ticket { id=%d, name='%s', coordinates=%s, creationDate=%s, price=%d, refundable=%s, type=%s, person=%s }",
+//                id,
+//                name,
+//                coordinates,
+//                creationDate,
+//                price,
+//                refundable,
+//                type,
+//                person);
+//    }
 
     public Object getId() {
         return id;
