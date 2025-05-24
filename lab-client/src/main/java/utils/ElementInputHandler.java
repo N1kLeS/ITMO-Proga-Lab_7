@@ -11,7 +11,11 @@ import java.time.ZonedDateTime;
 import java.util.Scanner;
 
 public class ElementInputHandler {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    public ElementInputHandler(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public Object readValue(Class<? extends AbstractModel> type) {
         if (type == Ticket.class) {
