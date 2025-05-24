@@ -1,10 +1,9 @@
 package controller.commands;
 
 import controller.*;
-import ui.Command;
-import ui.CommandType;
-import ui.Request;
-import ui.Response;
+import ui.*;
+
+import java.util.ArrayList;
 
 public class HelpCommand extends Command {
     CommandHandler commandHandler;
@@ -15,15 +14,9 @@ public class HelpCommand extends Command {
 
     @Override
     public Response execute(Request request) {
-        StringBuilder helpMessage = new StringBuilder();
-        helpMessage.append("Доступные команды:\n");
 
-        String commandsInfo = commandHandler.getCommands();
-        if (commandsInfo.isEmpty()) {
-            return Response.warning("Нет доступных команд.");
-        }
+        ArrayList<CommandInfo> commandsInfo = commandHandler.getCommandInfos();
 
-        helpMessage.append(commandsInfo);
-        return Response.success(helpMessage.toString(), null);
+        return Response.success("Доступные команды:", commandsInfo);
     }
 }

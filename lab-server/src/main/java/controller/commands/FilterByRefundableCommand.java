@@ -12,7 +12,7 @@ public class FilterByRefundableCommand extends Command {
     private final CollectionManager collectionManager;
 
     public FilterByRefundableCommand(CollectionManager collectionManager) {
-        super("filter_by_refundable", "выводит элементы, значение поля refundable (true|false) которых равно заданному", 1 , CommandType.WITH_ARGUMENTS);
+        super("filter_by_refundable", "выводит элементы, значение поля refundable (true|false) которых равно заданному", 1 , CommandType.WITH_ARGUMENT);
         this.collectionManager = collectionManager;
     }
 

@@ -1,6 +1,7 @@
 package server;
 
 import controller.CommandHandler;
+import models.Ticket;
 import ui.Request;
 import ui.Response;
 import ui.Serialization;

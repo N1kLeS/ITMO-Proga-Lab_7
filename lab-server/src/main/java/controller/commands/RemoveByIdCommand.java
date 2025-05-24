@@ -10,7 +10,7 @@ public class RemoveByIdCommand extends Command {
     private final CollectionManager collectionManager;
 
     public RemoveByIdCommand(CollectionManager collectionManager) {
-        super("remove_by_id", "удаление тикета по id", 1, CommandType.WITH_ARGUMENTS);
+        super("remove_by_id", "удаление тикета по id", 1, CommandType.WITH_ARGUMENT);
         this.collectionManager = collectionManager;
     }
 

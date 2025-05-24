@@ -4,26 +4,23 @@ import ui.Command;
 import ui.CommandType;
 import models.Ticket;
 import service.CollectionManager;
-import controller.ElementInputHandler;
 import ui.Request;
 import ui.Response;
 
 public class AddCommand extends Command {
-    ElementInputHandler inputHandler;
     CollectionManager collectionManager;
 
-    public AddCommand(CollectionManager collectionManager, ElementInputHandler inputHandler) {
-        super("add", "добавляет новый элемент в коллекцию", 0, CommandType.WITHOUT_ARGUMENTS);
+    public AddCommand(CollectionManager collectionManager) {
+        super("add", "добавляет новый элемент в коллекцию", 0, CommandType.WITH_FORM);
         this.collectionManager = collectionManager;
-        this.inputHandler = inputHandler;
     }
 
     @Override
     public Response execute(Request request) {
+        Ticket ticket = (Ticket) request.getData();
+
         if (collectionManager != null) {
             System.out.println("Добавление нового элемента в коллекцию...");
-
-            Ticket ticket = inputHandler.createTicket();
             collectionManager.add(ticket);
         }
 

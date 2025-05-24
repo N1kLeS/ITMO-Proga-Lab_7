@@ -1,10 +1,10 @@
 package server;
 import controller.CommandHandler;
-import controller.ElementInputHandler;
 import controller.commands.*;
 import service.CollectionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ui.Response;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -18,31 +18,31 @@ public class ServerMain {
     private final int port;
     private final CollectionManager collectionManager;
     private final CommandHandler commandHandler;
-    private final ElementInputHandler inputHandler;
     private volatile boolean isRunning = true;
 
     public ServerMain(int port, String dataFile) {
         this.port = port;
         this.collectionManager = new CollectionManager(dataFile);
         this.commandHandler = new CommandHandler();
-        this.inputHandler = new ElementInputHandler();
         initializeCommands();
     }
 
     private void initializeCommands() {
-        commandHandler.register(new AddCommand(collectionManager, inputHandler));
+        commandHandler.register(new AddCommand(collectionManager));
         commandHandler.register(new InfoCommand(collectionManager));
         commandHandler.register(new ShowCommand(collectionManager));
-        commandHandler.register(new UpdateCommand(collectionManager, inputHandler));
+        commandHandler.register(new UpdateCommand(collectionManager));
         commandHandler.register(new ClearCommand(collectionManager));
         commandHandler.register(new RemoveByIdCommand(collectionManager));
-        commandHandler.register(new AddIfMinCommand(collectionManager, inputHandler));
-        commandHandler.register(new RemoveGreaterCommand(collectionManager, inputHandler));
-        commandHandler.register(new RemoveLowerCommand(collectionManager, inputHandler));
+        commandHandler.register(new AddIfMinCommand(collectionManager));
+        commandHandler.register(new RemoveGreaterCommand(collectionManager));
+        commandHandler.register(new RemoveLowerCommand(collectionManager));
         commandHandler.register(new CountGreaterThanTypeCommand(collectionManager));
         commandHandler.register(new FilterByRefundableCommand(collectionManager));
         commandHandler.register(new FilterGreaterThanPersonCommand(collectionManager));
         commandHandler.register(new HelpCommand(commandHandler));
+        commandHandler.register(new ExitClientCommand());
+        commandHandler.register(new ExecuteScriptCommand());
     }
 
     public void start() {
@@ -92,6 +92,11 @@ public class ServerMain {
 
     private void shutdown() {
         isRunning = false;
+        if (collectionManager.saveCollection()) {
+            logger.info("Коллекция успешно сохранена.");
+        } else {
+            logger.error("Ошибка при сохранении коллекции.");
+        }
         logger.info("Server shutdown initiated");
     }
 }

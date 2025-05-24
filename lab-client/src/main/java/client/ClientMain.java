@@ -1,10 +1,13 @@
 package client;
 
+import models.Ticket;
 import ui.Request;
 import ui.Response;
+import ui.CommandInfo;
 import ui.Serialization;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.ElementInputHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -13,6 +16,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,12 +37,14 @@ public class ClientMain {
     private final DatagramChannel channel;
     private volatile boolean isConnected = false;
     private final ScheduledExecutorService heartbeatExecutor = Executors.newSingleThreadScheduledExecutor();
+    private HashMap<String, CommandInfo> commandsList;
 
     public ClientMain(String host, int port) throws IOException {
         this.host = host;
         this.port = port;
         this.channel = DatagramChannel.open();
         this.channel.configureBlocking(false);
+        this.commandsList = new HashMap<>();
         connectToServer();
     }
 
@@ -126,9 +133,21 @@ public class ClientMain {
         System.exit(1);
     }
 
+    private void loadCommandsList() {
+
+        Response response = sendRequestWithRetry(new Request("help", new String[0]));
+
+        for (CommandInfo commandInfo : (ArrayList<CommandInfo>) response.getData())
+            this.commandsList.put(commandInfo.getName(), commandInfo);
+
+    }
+
     public void start() {
+
         try (Scanner scanner = new Scanner(System.in)) {
             logger.info("Client started. Connected to {}:{}", host, port);
+
+            loadCommandsList();
 
             while (isConnected) {
                 System.out.print("> ");
@@ -140,7 +159,22 @@ public class ClientMain {
                     String commandName = parts[0];
                     String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
 
-                    Response response = sendRequestWithRetry(new Request(commandName, args));
+//                    if (args.length != commandsList.size()) {
+//                        System.out.println("Неверное количество аргументов!");
+//                        continue;
+//                    }
+
+                    Response response;
+
+                    if (commandsList.get(commandName).getCommandType().isNeedForm()){
+                        ElementInputHandler inputHandler = new ElementInputHandler();
+                        Ticket ticket = inputHandler.createTicket();
+
+                        response = sendRequestWithRetry(new Request(commandName, args, ticket));
+                    } else {
+                        response = sendRequestWithRetry(new Request(commandName, args));
+                    }
+
                     handleResponse(response);
                 } catch (Exception e) {
                     logger.error("Error processing command: {}", e.getMessage());
@@ -170,7 +204,7 @@ public class ClientMain {
             return waitForResponse();
         } catch (IOException e) {
             logger.error("Request failed: {}", e.getMessage());
-            return Response.success("Connection error: " + e.getMessage());
+            return Response.error("Connection error: " + e.getMessage());
         }
     }
 
@@ -199,7 +233,7 @@ public class ClientMain {
 
     private void handleResponse(Response response) {
         if (response != null) {
-            System.out.println("Server response: " + response.getMessage());
+            System.out.println("Server response: " + response);
         } else {
             System.out.println("No response from server.");
         }

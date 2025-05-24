@@ -2,7 +2,6 @@ package controller.commands;
 
 import ui.Command;
 import ui.CommandType;
-import controller.ElementInputHandler;
 import models.Ticket;
 import service.CollectionManager;
 import ui.Request;
@@ -10,12 +9,10 @@ import ui.Response;
 
 public class UpdateCommand extends Command {
     private final CollectionManager collectionManager;
-    private final ElementInputHandler inputHandler;
 
-    public UpdateCommand(CollectionManager collectionManager, ElementInputHandler inputHandler) {
-        super("update", "обновление билета по id", 1, CommandType.WITH_ARGUMENTS);
+    public UpdateCommand(CollectionManager collectionManager) {
+        super("update", "обновление билета по id", 1, CommandType.WITH_ARGUMENT);
         this.collectionManager = collectionManager;
-        this.inputHandler = inputHandler;
     }
 
     @Override
@@ -23,9 +20,10 @@ public class UpdateCommand extends Command {
         try {
             Long id = Long.parseLong(request.getArgument(0));
             System.out.println("Создание нового объекта для обновления...");
-            Ticket updatedTicket = inputHandler.createTicket();
 
-            if (collectionManager.updateElementById(id, updatedTicket)) {
+            Ticket ticket = (Ticket) request.getData();
+
+            if (collectionManager.updateElementById(id, ticket)) {
                 return Response.success("Элемент с id " + id + " успешно обновлён.");
             } else {
                 return Response.warning("Элемент с id " + id + " не найден.");

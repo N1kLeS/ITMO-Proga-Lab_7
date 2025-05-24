@@ -1,12 +1,11 @@
 package controller;
 
+import models.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ui.Command;
-import ui.CommandType;
-import ui.Request;
-import ui.Response;
+import ui.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,26 +23,24 @@ public class CommandHandler {
         CommandType commandType = command.getCommandType();
         String[] args = request.getCommandArgs();
 
+
         if (commandType == CommandType.WITHOUT_ARGUMENTS) {
             if (args.length == 0) {
                 return command.execute(request);
             }
-            return Response.warning("Команда не принимает аргументы.");
+            return Response.error("Команда не принимает аргументы.");
         }
 
-        if (commandType.getArgs() == args.length || commandType.getArgs() == -1) {
+        if (commandType.getArgumentCount() == args.length || commandType.getArgumentCount() == -1) {
             return command.execute(request);
         }
 
         return Response.warning("Неверное количество аргументов для команды: " + command.getName());
     }
 
-    public String getCommands() {
-        StringBuilder builder = new StringBuilder();
-        for (Command command : commands.values()) {
-            builder.append(command.getName() + ": " + command.getInfo() + "\n");
-        }
-        return builder.toString();
+    public ArrayList<Command> getCommands() {
+        ArrayList<Command> commands = new ArrayList<>(this.commands.values());
+        return commands;
     }
 
     public Response handle(Request request) {
@@ -70,7 +67,7 @@ public class CommandHandler {
     }
 
     private boolean validateArguments(Command command, Request request) {
-        int expectedArgs = command.getCommandType().getArgs();
+        int expectedArgs = command.getCommandType().getArgumentCount();
         int actualArgs = request.getCommandArgs().length;
 
         return expectedArgs == -1 || actualArgs == expectedArgs;
@@ -96,5 +93,15 @@ public class CommandHandler {
 
     public boolean hasCommand(String commandName) {
         return commands.containsKey(commandName.toLowerCase());
+    }
+
+    public ArrayList<CommandInfo> getCommandInfos() {
+        ArrayList<CommandInfo> commandInfos = new ArrayList<>();
+
+        for (Command command : commands.values()) {
+            commandInfos.add(new CommandInfo(command));
+        }
+
+        return commandInfos;
     }
 }

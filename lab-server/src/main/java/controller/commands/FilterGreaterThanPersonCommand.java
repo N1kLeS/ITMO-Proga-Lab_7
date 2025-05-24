@@ -1,8 +1,8 @@
 package controller.commands;
 
+import models.Ticket;
 import ui.Command;
 import ui.CommandType;
-import controller.ElementInputHandler;
 import models.person.Person;
 import service.CollectionManager;
 import ui.Request;
@@ -19,8 +19,8 @@ public class FilterGreaterThanPersonCommand extends Command {
     @Override
     public Response execute(Request request) {
         try {
-            ElementInputHandler inputHandler = new ElementInputHandler();
-            Person inputPerson = inputHandler.readPerson();
+
+            Person inputPerson = (Person) request.getData();
 
             var filteredTickets = collectionManager.getCollection().stream().filter(ticket -> ticket.getPerson() != null && ticket.getPerson().compareTo(inputPerson) > 0).toList();
 
