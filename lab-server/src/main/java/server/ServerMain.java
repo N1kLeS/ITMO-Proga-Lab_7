@@ -108,6 +108,7 @@ public class ServerMain {
 
     private void serverConsole() {
         Scanner scanner = new Scanner(System.in);
+
         while (isRunning) {
             try {
                 String input = scanner.nextLine().trim();
