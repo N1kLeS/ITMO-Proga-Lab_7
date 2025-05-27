@@ -48,10 +48,11 @@ public class ClientMain {
                     Request request = requestManager.generateRequest(input, scanner);
 
                     Response response = connectionUDP.sendRequestWithRetry(request);
-                    
+
                     System.out.println(response);
                 } catch (Exception e) {
-                    logger.error("Error processing command: {}", e.getMessage());
+//                    logger.error("Error processing command: {}", e.getMessage());
+                    System.out.println("Введите команду help для получения списка команд!");
                     if (!connectionUDP.checkConnection()) {
                         connectionUDP.handleDisconnection();
                     }

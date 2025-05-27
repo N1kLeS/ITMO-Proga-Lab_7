@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.Scanner;
 
 public class ServerMain {
     private static final Logger logger = LogManager.getLogger(ServerMain.class);
@@ -47,6 +48,10 @@ public class ServerMain {
 
     public void start() {
         logger.info("Запускаем сервер на порту {}", port);
+
+        Thread consoleThread = new Thread(this::serverConsole);
+        consoleThread.setDaemon(true);  // Демон-поток (завершится при остановке сервера)
+        consoleThread.start();
 
         try (DatagramChannel channel = DatagramChannel.open()) {
             channel.bind(new InetSocketAddress(port));
@@ -87,6 +92,7 @@ public class ServerMain {
 
         ServerMain server = new ServerMain(port, dataFile);
         Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
+
         server.start();
     }
 
@@ -98,5 +104,30 @@ public class ServerMain {
             logger.error("Ошибка при сохранении коллекции.");
         }
         logger.info("Server shutdown initiated");
+    }
+
+    private void serverConsole() {
+        Scanner scanner = new Scanner(System.in);
+        while (isRunning) {
+            try {
+                String input = scanner.nextLine().trim();
+
+                String[] parts = input.split(" ", 2);
+                String commandName = parts[0];
+                String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
+
+                if (commandName.equals("save") && args.length == 0) {
+                    collectionManager.saveCollection();
+                    System.out.println("Коллекция успешно сохранена.");
+                    logger.info("Коллекция успешно сохранена.");
+                } else {
+                    System.out.println("Неизвестная команда: " + commandName);
+                }
+                Thread.sleep(50);
+            } catch (Exception e) {
+                logger.error("Ошибка при выполнении команды: " + e.getMessage());
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+        }
     }
 }

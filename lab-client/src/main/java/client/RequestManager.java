@@ -41,14 +41,12 @@ public class RequestManager {
 
         if (!serverCommandsInfoList.containsKey(commandName)) {
             System.out.println("Неизвестная команда: " + commandName);
-            throw new RuntimeException("<UNK> <UNK>: " + commandName);
         }
 
         CommandInfo command = serverCommandsInfoList.get(commandName);
         CommandType commandType = command.getCommandType();
         if (commandType.getArgumentCount() != args.length) {
             System.out.println("Неверное количество аргументов для команды: " + commandName);
-            throw new RuntimeException("<UNK> <UNK>: " + commandName);
         }
 
         if (!command.isServerCommand()) {
@@ -58,7 +56,6 @@ public class RequestManager {
                 System.out.println(response);
             } else {
                 System.out.println("Команда не найдена: " + commandName);
-                throw new RuntimeException("<UNK> <UNK>: " + commandName);
             }
         }
 
