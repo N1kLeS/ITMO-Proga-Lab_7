@@ -1,7 +1,6 @@
-package models.person;
+package models;
 
 import lombok.ToString;
-import models.AbstractModel;
 
 @ToString
 public class Location extends AbstractModel {

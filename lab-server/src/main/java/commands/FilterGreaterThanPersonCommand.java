@@ -1,6 +1,6 @@
-package controller.commands;
+package commands;
 
-import models.person.Person;
+import models.Person;
 import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;

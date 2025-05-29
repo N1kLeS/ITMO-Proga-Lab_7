@@ -3,8 +3,8 @@ package service;
 import models.Coordinates;
 import models.Ticket;
 import models.TicketType;
-import models.person.Location;
-import models.person.Person;
+import models.Location;
+import models.Person;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

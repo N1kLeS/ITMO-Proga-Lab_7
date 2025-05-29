@@ -2,7 +2,6 @@ package models;
 
 import lombok.Getter;
 import lombok.ToString;
-import models.person.Person;
 
 import java.time.ZonedDateTime;
 

@@ -1,4 +1,4 @@
-package controller.commands;
+package commands;
 
 import models.Ticket;
 import service.CollectionManager;

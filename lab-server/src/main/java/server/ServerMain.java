@@ -1,6 +1,6 @@
 package server;
 
-import controller.commands.*;
+import commands.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.CollectionManager;
@@ -50,7 +50,7 @@ public class ServerMain {
         logger.info("Запускаем сервер на порту {}", port);
 
         Thread consoleThread = new Thread(this::serverConsole);
-        consoleThread.setDaemon(true);  // Демон-поток (завершится при остановке сервера)
+        consoleThread.setDaemon(true);
         consoleThread.start();
 
         try (DatagramChannel channel = DatagramChannel.open()) {
