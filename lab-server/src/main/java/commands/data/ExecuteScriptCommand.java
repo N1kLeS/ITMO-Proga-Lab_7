@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import ui.Command;
 import ui.CommandType;
@@ -7,7 +7,7 @@ import ui.Response;
 
 public class ExecuteScriptCommand extends Command {
     public ExecuteScriptCommand() {
-        super("execute_script", "загрузка скрипта с указанного файла", false, CommandType.WITH_ARGUMENTS(1));
+        super("execute_script", "загрузка скрипта с указанного файла", false, CommandType.WITH_ARGUMENTS(1), false);
     }
 
     @Override

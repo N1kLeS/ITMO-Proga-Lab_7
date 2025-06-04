@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import models.Ticket;
 import service.CollectionManager;
@@ -19,7 +19,9 @@ public class AddIfMinCommand extends Command {
         super("add_if_min",
               "добавляет новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции",
               true,
-              CommandType.WITH_FORM(Ticket.class));
+              CommandType.WITH_FORM(Ticket.class),
+              true
+        );
         this.collectionManager = collectionManager;
     }
 

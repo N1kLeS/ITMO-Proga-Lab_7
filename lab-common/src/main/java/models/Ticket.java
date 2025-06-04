@@ -1,6 +1,9 @@
 package models;
 
+import authentication.User;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
@@ -18,6 +21,10 @@ public class Ticket extends AbstractModel {
     @Getter
     private final TicketType type; //Поле может быть null
     private final Person person; //Поле не может быть null
+
+    @Getter
+    @Setter
+    private User ownerUser;
 
 
     public Ticket(String name, Coordinates coordinates, ZonedDateTime creationDate,

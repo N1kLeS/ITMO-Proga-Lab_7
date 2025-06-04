@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import models.Person;
 import service.CollectionManager;
@@ -14,7 +14,9 @@ public class FilterGreaterThanPersonCommand extends Command {
         super("filter_greater_than_person",
               "выводит элементы, значение поля person которых больше заданного",
               true,
-              CommandType.WITH_FORM(Person.class));
+              CommandType.WITH_FORM(Person.class),
+              true
+        );
         this.collectionManager = collectionManager;
     }
 

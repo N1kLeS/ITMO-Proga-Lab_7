@@ -1,15 +1,22 @@
 package server;
 
-import commands.*;
+import DataBase.DBConnector;
+import DataBase.UserDAO;
+import authentication.User;
+import commands.auth.LoginCommand;
+import commands.auth.RegistrationCommand;
+import commands.data.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.CollectionManager;
+import service.UserService;
 import ui.CommandHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ServerMain {
@@ -19,12 +26,20 @@ public class ServerMain {
     private final int port;
     private final CollectionManager collectionManager;
     private final CommandHandler commandHandler;
+    private final UserService userService;
+    private final DBConnector dbConnector;
+
     private volatile boolean isRunning = true;
 
-    public ServerMain(int port, String dataFile) {
+    public ServerMain(int port, String dataFile, String URL, String dbUser, String dbPassword) throws SQLException {
         this.port = port;
         this.collectionManager = new CollectionManager(dataFile);
         this.commandHandler = new CommandHandler();
+
+
+        this.dbConnector = new DBConnector(URL, dbUser, dbPassword);
+        this.userService = new UserService(new UserDAO(dbConnector.getConnection()));
+
         initializeCommands();
     }
 
@@ -42,6 +57,8 @@ public class ServerMain {
         commandHandler.register(new FilterByRefundableCommand(collectionManager));
         commandHandler.register(new FilterGreaterThanPersonCommand(collectionManager));
         commandHandler.register(new HelpCommand(commandHandler));
+        commandHandler.register(new RegistrationCommand(userService));
+        commandHandler.register(new LoginCommand(userService));
         commandHandler.register(new ExitClientCommand());
         commandHandler.register(new ExecuteScriptCommand());
     }
@@ -77,23 +94,30 @@ public class ServerMain {
             buffer.get(data);
             buffer.clear();
 
-            new RequestProcessor(channel, clientAddress, data, commandHandler).start();
+            new RequestProcessor(channel, clientAddress, data, commandHandler, userService).start();
         }
     }
 
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("Usage: java ServerMain <port> <data_file>");
+        if (args.length != 5) {
+            System.err.println("Usage: java ServerMain <port> <data_file> <dbURL> <dbUser> <dbPassword>");
             System.exit(1);
         }
 
         int port = Integer.parseInt(args[0]);
         String dataFile = args[1];
+        String dbURL = args[2];
+        String dbUser = args[3];
+        String dbPassword = args[4];
 
-        ServerMain server = new ServerMain(port, dataFile);
-        Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
+        try {
+            ServerMain server = new ServerMain(port, dataFile, dbURL, dbUser, dbPassword);
+            Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
 
-        server.start();
+            server.start();
+        } catch (Exception exception) {
+            logger.error(exception.getMessage());
+        }
     }
 
     private void shutdown() {

@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import service.CollectionManager;
 import ui.Command;
@@ -13,7 +13,9 @@ public class FilterByRefundableCommand extends Command {
         super("filter_by_refundable",
               "выводит элементы, значение поля refundable (true|false) которых равно " + "заданному",
               true,
-              CommandType.WITH_ARGUMENTS(1));
+              CommandType.WITH_ARGUMENTS(1),
+              true
+        );
         this.collectionManager = collectionManager;
     }
 

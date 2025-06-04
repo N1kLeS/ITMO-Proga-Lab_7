@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import service.CollectionManager;
 import ui.Command;
@@ -10,7 +10,7 @@ public class ClearCommand extends Command {
     private final CollectionManager collectionManager;
 
     public ClearCommand(CollectionManager collectionManager) {
-        super("clear", "команда очистки коллекции.", true, CommandType.WITHOUT_DATA());
+        super("clear", "команда очистки коллекции.", true, CommandType.WITHOUT_DATA(), true);
         this.collectionManager = collectionManager;
     }
 

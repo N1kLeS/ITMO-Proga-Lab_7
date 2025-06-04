@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import service.CollectionManager;
 import ui.Command;
@@ -10,7 +10,7 @@ public class RemoveByIdCommand extends Command {
     private final CollectionManager collectionManager;
 
     public RemoveByIdCommand(CollectionManager collectionManager) {
-        super("remove_by_id", "удаление тикета по id", true, CommandType.WITH_ARGUMENTS(1));
+        super("remove_by_id", "удаление тикета по id", true, CommandType.WITH_ARGUMENTS(1), true);
         this.collectionManager = collectionManager;
     }
 

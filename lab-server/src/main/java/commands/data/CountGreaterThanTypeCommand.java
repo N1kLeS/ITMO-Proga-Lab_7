@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import ui.Command;
 import ui.CommandType;
@@ -14,7 +14,9 @@ public class CountGreaterThanTypeCommand extends Command {
         super("count_greater_than_type",
               "выводит количество элементов, значение поля type (USUAL, BUDGETARY, CHEAP) которых больше заданного",
               true,
-              CommandType.WITH_ARGUMENTS(1));
+              CommandType.WITH_ARGUMENTS(1),
+              true
+        );
         this.collectionManager = collectionManager;
     }
 

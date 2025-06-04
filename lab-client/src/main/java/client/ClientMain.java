@@ -40,6 +40,7 @@ public class ClientMain {
             RequestManager requestManager = new RequestManager(connectionUDP);
 
             while (connectionUDP.isConnected()) {
+
                 System.out.print("> ");
                 String input = scanner.nextLine().trim();
                 if (input.isEmpty()) continue;
@@ -63,6 +64,4 @@ public class ClientMain {
             connectionUDP.getHeartbeatExecutor().shutdown();
         }
     }
-
-
 }

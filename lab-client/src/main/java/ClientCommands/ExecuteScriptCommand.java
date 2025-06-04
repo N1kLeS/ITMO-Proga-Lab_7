@@ -17,7 +17,7 @@ public class ExecuteScriptCommand extends Command {
     private final RequestManager requestManager;
 
     public ExecuteScriptCommand(RequestManager requestManager) {
-        super("execute_script", "загрузка скрипта с указанного файла", false, CommandType.WITH_ARGUMENTS(1));
+        super("execute_script", "загрузка скрипта с указанного файла", false, CommandType.WITH_ARGUMENTS(1), false);
         this.requestManager = requestManager;
     }
 

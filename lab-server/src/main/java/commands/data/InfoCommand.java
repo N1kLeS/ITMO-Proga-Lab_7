@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import service.CollectionManager;
 import ui.Command;
@@ -10,7 +10,7 @@ public class InfoCommand extends Command {
     private final CollectionManager collectionManager;
 
     public InfoCommand(CollectionManager collectionManager) {
-        super("info", "вывод информации о коллекции", true, CommandType.WITHOUT_DATA());
+        super("info", "вывод информации о коллекции", true, CommandType.WITHOUT_DATA(), true);
         this.collectionManager = collectionManager;
     }
 

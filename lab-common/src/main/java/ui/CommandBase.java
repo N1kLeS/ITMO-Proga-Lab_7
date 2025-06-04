@@ -11,7 +11,5 @@ public abstract class CommandBase implements Serializable {
     protected String info;
     protected CommandType commandType;
     protected boolean isServerCommand;
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+    protected boolean requiredAuth;
 }

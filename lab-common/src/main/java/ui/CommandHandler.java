@@ -1,5 +1,6 @@
 package ui;
 
+import authentication.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +27,7 @@ public class CommandHandler {
         return commands.get(name);
     }
 
-    public Response handle(Request request) {
+    public Response handle(Request request, User user) {
         try {
             Command command = commands.get(request.getCommandName().toLowerCase());
 
@@ -40,8 +41,12 @@ public class CommandHandler {
                 return Response.error("Invalid arguments for command: " + command.getName());
             }
 
+            if (command.isRequiredAuth() && user == null) {
+                return Response.error("You are not logged in");
+            }
+
             logger.info("Executing command: {}", command.getName());
-            return command.execute(request);
+            return command.execute(new Request(request, user));
 
         } catch (Exception e) {
             logger.error("Command execution error: {}", e.getMessage(), e);
@@ -56,11 +61,13 @@ public class CommandHandler {
         return actualArgs == expectedArgs;
     }
 
-    public ArrayList<CommandInfo> getCommandInfos() {
+    public ArrayList<CommandInfo> getCommandInfos(boolean isLoggedIn) {
         ArrayList<CommandInfo> commandInfos = new ArrayList<>();
 
         for (Command command : commands.values()) {
-            commandInfos.add(new CommandInfo(command));
+            if (isLoggedIn || !command.isRequiredAuth()) {
+                commandInfos.add(new CommandInfo(command));
+            }
         }
 
         return commandInfos;

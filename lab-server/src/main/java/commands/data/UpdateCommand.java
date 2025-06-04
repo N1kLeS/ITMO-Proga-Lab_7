@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import models.Ticket;
 import service.CollectionManager;
@@ -11,7 +11,7 @@ public class UpdateCommand extends Command {
     private final CollectionManager collectionManager;
 
     public UpdateCommand(CollectionManager collectionManager) {
-        super("update", "обновление билета по id", true, CommandType.WITH_ARGUMENTS(1));
+        super("update", "обновление билета по id", true, CommandType.WITH_ARGUMENTS(1), true);
         this.collectionManager = collectionManager;
     }
 

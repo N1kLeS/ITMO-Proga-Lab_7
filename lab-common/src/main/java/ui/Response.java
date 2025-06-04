@@ -12,9 +12,6 @@ public class Response implements Serializable {
     private final String message;
     private final Object data;
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     public enum Status {
         SUCCESS,
         WARNING,

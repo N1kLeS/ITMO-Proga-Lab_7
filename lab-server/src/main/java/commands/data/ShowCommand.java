@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import models.Ticket;
 import service.CollectionManager;
@@ -14,7 +14,7 @@ public class ShowCommand extends Command {
     private final CollectionManager collectionManager;
 
     public ShowCommand(CollectionManager collectionManager) {
-        super("show", "вывести все существующие тикеты", true, CommandType.WITHOUT_DATA());
+        super("show", "вывести все существующие тикеты", true, CommandType.WITHOUT_DATA(), true);
         this.collectionManager = collectionManager;
     }
 

@@ -2,6 +2,7 @@ package client;
 
 import ClientCommands.ExecuteScriptCommand;
 import ClientCommands.ExitClientCommand;
+import authentication.User;
 import lombok.Getter;
 import ui.*;
 import utils.ElementInputHandler;
@@ -37,7 +38,6 @@ public class RequestManager {
         String[] parts = input.split(" ", 2);
         String commandName = parts[0];
         String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
-
 
         if (!serverCommandsInfoList.containsKey(commandName)) {
             System.out.println("Неизвестная команда: " + commandName);

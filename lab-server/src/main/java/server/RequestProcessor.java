@@ -2,6 +2,7 @@ package server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.UserService;
 import ui.CommandHandler;
 import ui.Request;
 import ui.Response;
@@ -19,13 +20,15 @@ public class RequestProcessor extends Thread {
     private final InetSocketAddress clientAddress;
     private final byte[] requestData;
     private final CommandHandler commandHandler;
+    private final UserService userService;
 
     public RequestProcessor(DatagramChannel channel, InetSocketAddress clientAddress,
-                            byte[] requestData, CommandHandler commandHandler) {
+                            byte[] requestData, CommandHandler commandHandler, UserService userService) {
         this.channel = channel;
         this.clientAddress = clientAddress;
         this.requestData = requestData;
         this.commandHandler = commandHandler;
+        this.userService = userService;
     }
 
     @Override
@@ -40,7 +43,8 @@ public class RequestProcessor extends Thread {
                 return;
             }
 
-            Response response = commandHandler.handle(request);
+            Response response = commandHandler.handle(request, userService.getUserByToken(request.getUserToken()));
+
             sendResponse(response);
         } catch (Exception e) {
             logger.error("Error processing request: {}", e.getMessage());

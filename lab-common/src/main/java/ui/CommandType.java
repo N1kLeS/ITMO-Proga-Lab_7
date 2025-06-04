@@ -8,9 +8,6 @@ import java.io.Serializable;
 
 @Getter
 public class CommandType implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     private final int argumentCount;
     private final Class<? extends AbstractModel> formClass;
 

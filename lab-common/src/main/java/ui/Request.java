@@ -1,8 +1,8 @@
 package ui;
 
+import authentication.User;
 import lombok.Getter;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
@@ -11,8 +11,8 @@ public class Request implements Serializable {
     private final String[] commandArgs;
     private Object data;
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+    private String userToken;
+    private User user;
 
     public Request(String commandName, String[] commandArgs) {
         this.commandName = commandName;
@@ -23,6 +23,13 @@ public class Request implements Serializable {
         this.commandName = commandName;
         this.commandArgs = commandArgs;
         this.data = data;
+    }
+
+    public Request(Request request, User user) {
+        this.commandName = request.commandName;
+        this.commandArgs = request.commandArgs;
+        this.data = request.data;
+        this.user = user;
     }
 
     public String getArgument(int index) {

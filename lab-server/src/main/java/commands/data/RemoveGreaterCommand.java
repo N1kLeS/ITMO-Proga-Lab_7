@@ -1,4 +1,4 @@
-package commands;
+package commands.data;
 
 import models.Ticket;
 import service.CollectionManager;
@@ -14,7 +14,9 @@ public class RemoveGreaterCommand extends Command {
         super("remove_greater",
               "удаляет из коллекции все элементы, превышающие заданный",
               true,
-              CommandType.WITH_FORM(Ticket.class));
+              CommandType.WITH_FORM(Ticket.class),
+              true
+        );
         this.collectionManager = collectionManager;
     }
 

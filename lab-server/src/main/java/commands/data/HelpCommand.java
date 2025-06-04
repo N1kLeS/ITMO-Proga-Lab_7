@@ -1,5 +1,6 @@
-package commands;
+package commands.data;
 
+import authentication.User;
 import ui.*;
 
 import java.util.ArrayList;
@@ -8,13 +9,17 @@ public class HelpCommand extends Command {
     final CommandHandler commandHandler;
 
     public HelpCommand(CommandHandler commandHandler) {
-        super("help", "выводит информацию о всех доступных командах", true, CommandType.WITHOUT_DATA());
+        super("help", "выводит информацию о всех доступных командах", true, CommandType.WITHOUT_DATA(), false);
         this.commandHandler = commandHandler;
     }
 
     @Override
     public Response execute(Request request) {
-        ArrayList<CommandInfo> commandsInfo = commandHandler.getCommandInfos();
+        User user = request.getUser();
+
+        System.out.println(user);
+
+        ArrayList<CommandInfo> commandsInfo = commandHandler.getCommandInfos(user != null);
 
         return Response.success("Доступные команды:", commandsInfo);
     }
