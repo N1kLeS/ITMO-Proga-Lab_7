@@ -19,6 +19,13 @@ public class Request implements Serializable {
         this.commandArgs = commandArgs;
     }
 
+    public Request(String commandName, String[] commandArgs, Object data, String userToken) {
+        this.commandName = commandName;
+        this.commandArgs = commandArgs;
+        this.data = data;
+        this.userToken = userToken;
+    }
+
     public Request(String commandName, String[] commandArgs, Object data) {
         this.commandName = commandName;
         this.commandArgs = commandArgs;

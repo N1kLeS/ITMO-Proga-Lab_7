@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class ClientMain {
     private static final Logger logger = LogManager.getLogger(ClientMain.class);
     private final ConnectionUDP connectionUDP;
+    private String token;
 
 
     public static void main(String[] args) {
@@ -46,9 +47,13 @@ public class ClientMain {
                 if (input.isEmpty()) continue;
 
                 try {
-                    Request request = requestManager.generateRequest(input, scanner);
+                    Request request = requestManager.generateRequest(input, scanner, token);
 
                     Response response = connectionUDP.sendRequestWithRetry(request);
+
+                    if (response.getData() == null && token == null) {
+                        token = response.getMessage();
+                    }
 
                     System.out.println(response);
                 } catch (Exception e) {

@@ -62,14 +62,13 @@ public class CommandHandler {
     }
 
     public ArrayList<CommandInfo> getCommandInfos(boolean isLoggedIn) {
-        ArrayList<CommandInfo> commandInfos = new ArrayList<>();
+    ArrayList<CommandInfo> commandInfos = new ArrayList<>();
 
         for (Command command : commands.values()) {
             if (isLoggedIn || !command.isRequiredAuth()) {
                 commandInfos.add(new CommandInfo(command));
             }
         }
-
-        return commandInfos;
+    return commandInfos;
     }
 }

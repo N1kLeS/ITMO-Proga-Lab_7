@@ -17,8 +17,6 @@ public class HelpCommand extends Command {
     public Response execute(Request request) {
         User user = request.getUser();
 
-        System.out.println(user);
-
         ArrayList<CommandInfo> commandsInfo = commandHandler.getCommandInfos(user != null);
 
         return Response.success("Доступные команды:", commandsInfo);

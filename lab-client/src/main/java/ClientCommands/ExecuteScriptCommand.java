@@ -37,7 +37,7 @@ public class ExecuteScriptCommand extends Command {
                     if (!line.isEmpty()) {
 
                         System.out.println("Выполняется команда: " + line);
-                        Request innerRequest = requestManager.generateRequest(line, scanner);
+                        Request innerRequest = requestManager.generateRequest(line, scanner, null);
                         Response innerResponse = requestManager.getConnectionUDP()
                                 .sendRequestWithRetry(innerRequest);
 

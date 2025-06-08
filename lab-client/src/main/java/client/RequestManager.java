@@ -33,11 +33,15 @@ public class RequestManager {
     }
 
     public Request generateRequest(String input,
-                                   Scanner scanner) {
+                                   Scanner scanner, String userToken) {
 
         String[] parts = input.split(" ", 2);
         String commandName = parts[0];
         String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
+
+        if (userToken != null) {
+            loadServerCommandsList(userToken);
+        }
 
         if (!serverCommandsInfoList.containsKey(commandName)) {
             System.out.println("Неизвестная команда: " + commandName);
@@ -66,7 +70,7 @@ public class RequestManager {
             object = inputHandler.readValue(commandType.getFormClass());
         }
 
-        return new Request(commandName, args, object);
+        return new Request(commandName, args, object, userToken);
     }
 
     private void loadServerCommandsList() {
@@ -74,6 +78,12 @@ public class RequestManager {
 
         for (CommandInfo commandInfo : (ArrayList<CommandInfo>) response.getData())
             this.serverCommandsInfoList.put(commandInfo.getName(), commandInfo);
+    }
 
+    private void loadServerCommandsList(String userToken) {
+        Response response = connectionUDP.sendRequestWithRetry(new Request("help", new String[0],null, userToken));
+
+        for (CommandInfo commandInfo : (ArrayList<CommandInfo>) response.getData())
+            this.serverCommandsInfoList.put(commandInfo.getName(), commandInfo);
     }
 }
