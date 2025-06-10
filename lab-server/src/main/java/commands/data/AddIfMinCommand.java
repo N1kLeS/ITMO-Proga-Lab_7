@@ -28,7 +28,7 @@ public class AddIfMinCommand extends Command {
     @Override
     public Response execute(Request request) {
         Ticket ticket = (Ticket) request.getData();
-        ticket.setId(collectionManager.generateId());
+
         Optional<Ticket> minTicket = collectionManager.getCollection().stream().min(Ticket::compareTo);
 
         if (minTicket.isEmpty() || ticket.compareTo(minTicket.get()) < 0) {

@@ -1,6 +1,7 @@
 package server;
 
 import DataBase.DBConnector;
+import DataBase.TicketDAO;
 import DataBase.UserDAO;
 import authentication.User;
 import commands.auth.LoginCommand;
@@ -33,11 +34,9 @@ public class ServerMain {
 
     public ServerMain(int port, String dataFile, String URL, String dbUser, String dbPassword) throws SQLException {
         this.port = port;
-        this.collectionManager = new CollectionManager(dataFile);
-        this.commandHandler = new CommandHandler();
-
-
         this.dbConnector = new DBConnector(URL, dbUser, dbPassword);
+        this.collectionManager = new CollectionManager(new TicketDAO(dbConnector.getConnection()));
+        this.commandHandler = new CommandHandler();
         this.userService = new UserService(new UserDAO(dbConnector.getConnection()));
 
         initializeCommands();
@@ -81,8 +80,6 @@ public class ServerMain {
             }
         } catch (IOException | InterruptedException e) {
             logger.error("Ошибка сервера: {}", e.getMessage());
-        } finally {
-            collectionManager.saveCollection();
         }
     }
 
@@ -122,11 +119,6 @@ public class ServerMain {
 
     private void shutdown() {
         isRunning = false;
-        if (collectionManager.saveCollection()) {
-            logger.info("Коллекция успешно сохранена.");
-        } else {
-            logger.error("Ошибка при сохранении коллекции.");
-        }
         logger.info("Server shutdown initiated");
     }
 
@@ -141,10 +133,10 @@ public class ServerMain {
                 String commandName = parts[0];
                 String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
 
-                if (commandName.equals("save") && args.length == 0) {
-                    collectionManager.saveCollection();
-                    System.out.println("Коллекция успешно сохранена.");
-                    logger.info("Коллекция успешно сохранена.");
+                if (commandName.equals("exit") && args.length == 0) {
+
+                    System.out.println("Выключение сервера.");
+                    logger.info("Сервер выключен.");
                 } else {
                     System.out.println("Неизвестная команда: " + commandName);
                 }

@@ -57,7 +57,7 @@ public class ClientMain {
 
                     System.out.println(response);
                 } catch (Exception e) {
-//                    logger.error("Error processing command: {}", e.getMessage());
+                    logger.error("Error processing command: {}", e.getMessage());
                     System.out.println("Введите команду help для получения списка команд!");
                     if (!connectionUDP.checkConnection()) {
                         connectionUDP.handleDisconnection();

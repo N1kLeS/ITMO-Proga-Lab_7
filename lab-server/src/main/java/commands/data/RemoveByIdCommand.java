@@ -1,5 +1,6 @@
 package commands.data;
 
+import models.Ticket;
 import service.CollectionManager;
 import ui.Command;
 import ui.CommandType;
@@ -18,6 +19,12 @@ public class RemoveByIdCommand extends Command {
     public Response execute(Request request) {
         try {
             Long id = Long.parseLong(request.getArgument(0));
+
+            Ticket ticket = collectionManager.getById(id);
+            if (!ticket.getUserId().equals(request.getUser().getId())) {
+                return Response.error("У вас нет прав на удаление этого билета");
+            }
+
             if (collectionManager.removeById(id)) {
                 return Response.success("Элемент с id " + id + " успешно удалён.");
             } else {

@@ -1,8 +1,10 @@
 package models;
 
+import lombok.Data;
 import lombok.ToString;
 
 @ToString
+@Data
 public class Location extends AbstractModel {
     private final Integer x; //Поле не может быть null
     private final Integer y; //Поле не может быть null

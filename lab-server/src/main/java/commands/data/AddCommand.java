@@ -23,7 +23,6 @@ public class AddCommand extends Command {
         User user = request.getUser();
         ticket.setOwnerUser(user);
 
-        ticket.setId(collectionManager.generateId());
 
         collectionManager.add(ticket);
 

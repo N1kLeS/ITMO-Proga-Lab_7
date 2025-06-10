@@ -1,5 +1,6 @@
 package models;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import java.text.SimpleDateFormat;
@@ -8,8 +9,11 @@ import java.util.Date;
 @ToString
 public class Person extends AbstractModel implements Comparable<Person> {
     private final java.util.Date birthday; //Поле не может быть null
+    @Getter
     private final int weight; //Значение поля должно быть больше 0
-    private final String passportID; //Поле не может быть null
+    @Getter
+    private final String passportID;//Поле не может быть null
+    @Getter
     private final Location location; //Поле не может быть null
 
     public Person(Date birthday, int weight, String passportID, Location location) {
@@ -47,5 +51,9 @@ public class Person extends AbstractModel implements Comparable<Person> {
         }
 
         return passportID.compareTo(other.passportID);
+    }
+
+    public String getBirthday() {
+        return String.valueOf(birthday);
     }
 }

@@ -19,6 +19,12 @@ public class UpdateCommand extends Command {
     public Response execute(Request request) {
         try {
             Long id = Long.parseLong(request.getArgument(0));
+
+            Ticket ticket1 = collectionManager.getById(id);
+            if (!ticket1.getUserId().equals(request.getUser().getId())) {
+                return Response.error("У вас нет прав на удаление этого билета");
+            }
+
             Ticket ticket = (Ticket) request.getData();
             ticket.setId(id);
 

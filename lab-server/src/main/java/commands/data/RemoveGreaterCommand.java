@@ -24,6 +24,12 @@ public class RemoveGreaterCommand extends Command {
     public Response execute(Request request) {
         Ticket ticket = (Ticket) request.getData();
 
+        Long id = Long.parseLong(request.getArgument(0));
+        Ticket ticket1 = collectionManager.getById(id);
+        if (!ticket1.getUserId().equals(request.getUser().getId())) {
+            return Response.error("У вас нет прав на удаление этого билета");
+        }
+
         int initialSize = collectionManager.getCollection().size();
         collectionManager.getCollection().removeIf(existingTicket -> existingTicket.compareTo(ticket) > 0);
         int removedCount = initialSize - collectionManager.getCollection().size();
