@@ -8,11 +8,18 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class CollectionManager {
     private final HashSet<Ticket> collection;
     private final ZonedDateTime initializationDate;
     private final TicketDAO ticketDAO;
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
 
     public CollectionManager(TicketDAO ticketDAO) {
         this.collection = new HashSet<>();
@@ -22,7 +29,12 @@ public class CollectionManager {
     }
 
     public ArrayList<Ticket> getCollection() {
-        return new ArrayList<>(collection);
+        readLock.lock();
+        try {
+            return new ArrayList<>(collection);
+        } finally {
+            readLock.unlock();
+        }
     }
 
     //Автомат. загрузка из файла
@@ -69,36 +81,49 @@ public class CollectionManager {
 
     //Добавление
     public void add(Ticket ticket) {
+        writeLock.lock();
         try {
             ticketDAO.createTicket(ticket);
             collection.add(ticket);
         } catch (SQLException e) {
             System.out.println("Ошибка при сохранении билета в базу данных: " + e.getMessage());
+        } finally {
+            writeLock.unlock();
         }
     }
 
     //Отчистка
     public void clearCollection() {
-        collection.clear();
+        writeLock.lock();
+        try {
+            collection.clear();
+        } finally {
+            writeLock.unlock();
+        }
     }
 
     //Удаление по id
     public boolean removeById(Long id) {
-        Optional<Ticket> ticketToRemove = collection.stream()
-                .filter(ticket -> ticket.getId().equals(id))
-                .findFirst();
+        writeLock.lock();
+        try {
+            Optional<Ticket> ticketToRemove = collection.stream()
+                    .filter(ticket -> ticket.getId().equals(id))
+                    .findFirst();
 
-        if (ticketToRemove.isPresent()) {
-            try {
-                ticketDAO.deleteTicket(id);
-                collection.remove(ticketToRemove.get());
-                return true;
-            } catch (SQLException e) {
-                System.out.println("Ошибка при удалении билета из базы данных: " + e.getMessage());
+            if (ticketToRemove.isPresent()) {
+                try {
+                    ticketDAO.deleteTicket(id);
+                    collection.remove(ticketToRemove.get());
+                    return true;
+                } catch (SQLException e) {
+                    System.out.println("Ошибка при удалении билета из базы данных: " + e.getMessage());
+                    return false;
+                }
+            } else {
                 return false;
             }
-        } else {
-            return false;
+        } finally {
+            writeLock.unlock();
         }
     }
 

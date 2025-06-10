@@ -19,6 +19,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 
 public class ServerMain {
     private static final Logger logger = LogManager.getLogger(ServerMain.class);
@@ -29,15 +32,19 @@ public class ServerMain {
     private final CommandHandler commandHandler;
     private final UserService userService;
     private final DBConnector dbConnector;
+    private final ExecutorService requestProcessorPool;
+    private final ForkJoinPool responsePool;
 
     private volatile boolean isRunning = true;
 
-    public ServerMain(int port, String dataFile, String URL, String dbUser, String dbPassword) throws SQLException {
+    public ServerMain(int port, String URL, String dbUser, String dbPassword) throws SQLException {
         this.port = port;
         this.dbConnector = new DBConnector(URL, dbUser, dbPassword);
         this.collectionManager = new CollectionManager(new TicketDAO(dbConnector.getConnection()));
         this.commandHandler = new CommandHandler();
         this.userService = new UserService(new UserDAO(dbConnector.getConnection()));
+        this.requestProcessorPool = Executors.newCachedThreadPool();
+        this.responsePool = new ForkJoinPool();
 
         initializeCommands();
     }
@@ -91,24 +98,30 @@ public class ServerMain {
             buffer.get(data);
             buffer.clear();
 
-            new RequestProcessor(channel, clientAddress, data, commandHandler, userService).start();
+            requestProcessorPool.submit(() -> {
+                try {
+                    RequestProcessor processor = new RequestProcessor(channel, clientAddress, data, commandHandler, userService, responsePool);
+                    processor.process();
+                } catch (Exception e) {
+                    logger.error("Error processing request: {}", e.getMessage());
+                }
+            });
         }
     }
 
     public static void main(String[] args) {
-        if (args.length != 5) {
-            System.err.println("Usage: java ServerMain <port> <data_file> <dbURL> <dbUser> <dbPassword>");
+        if (args.length != 4) {
+            System.err.println("Usage: java ServerMain <port> <dbURL> <dbUser> <dbPassword>");
             System.exit(1);
         }
 
         int port = Integer.parseInt(args[0]);
-        String dataFile = args[1];
-        String dbURL = args[2];
-        String dbUser = args[3];
-        String dbPassword = args[4];
+        String dbURL = args[1];
+        String dbUser = args[2];
+        String dbPassword = args[3];
 
         try {
-            ServerMain server = new ServerMain(port, dataFile, dbURL, dbUser, dbPassword);
+            ServerMain server = new ServerMain(port, dbURL, dbUser, dbPassword);
             Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
 
             server.start();
@@ -117,8 +130,10 @@ public class ServerMain {
         }
     }
 
-    private void shutdown() {
+    public void shutdown() {
         isRunning = false;
+        requestProcessorPool.shutdown();
+        responsePool.shutdown();
         logger.info("Server shutdown initiated");
     }
 
