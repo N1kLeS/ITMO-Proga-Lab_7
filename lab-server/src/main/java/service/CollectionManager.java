@@ -8,7 +8,6 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -84,7 +83,8 @@ public class CollectionManager {
         writeLock.lock();
         try {
             ticketDAO.createTicket(ticket);
-            collection.add(ticket);
+            clearCollection();
+            loadCollection();
         } catch (SQLException e) {
             System.out.println("Ошибка при сохранении билета в базу данных: " + e.getMessage());
         } finally {
