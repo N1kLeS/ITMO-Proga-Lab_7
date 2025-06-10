@@ -146,11 +146,12 @@ public class ElementInputHandler {
         String input;
         while (true) {
             input = scanner.nextLine().trim();
-            if (input.isEmpty()) return null;
             if (input.equalsIgnoreCase("true")) return true;
             if (input.equalsIgnoreCase("false")) return false;
-            System.out.print("Введите true, false или оставьте поле пустым: ");
+            if (!input.isEmpty()) break;
+            System.out.print("Введите true, false: ");
         }
+        return null;
     }
 
     private <T extends Enum<T>> T inputEnum() {
