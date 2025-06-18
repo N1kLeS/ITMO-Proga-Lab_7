@@ -3,7 +3,6 @@ package server;
 import DataBase.DBConnector;
 import DataBase.TicketDAO;
 import DataBase.UserDAO;
-import authentication.User;
 import commands.auth.LoginCommand;
 import commands.auth.RegistrationCommand;
 import commands.data.*;
